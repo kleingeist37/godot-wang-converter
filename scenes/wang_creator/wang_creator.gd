@@ -104,8 +104,7 @@ func _ready() -> void:
 	
 	regex_pattern = ".+\\.(%s)$" % pattern;
 	file_dialog.filters = filter_extensions;
-	pass;
-	
+
 
 func _import_texture(path):
 	var img = Image.load_from_file(path);
@@ -121,15 +120,14 @@ func _import_texture(path):
 	texture_dict[current_texture_type] = texture;
 	button_dict[current_texture_type].texture_normal = texture;
 	
-	_create_preview_texture();
+	_create_preview_texture();	
 	
-	
-	btn_export.disabled = texture_dict.size() < 5;
-	pass;
+	btn_export.disabled = texture_dict.size() < 1;
+
 
 
 func _create_preview_texture():
-	var original := get_current_texture() as ImageTexture;
+	var original := _get_current_texture() as ImageTexture;
 
 	var preview_image := Image.create(original.get_width() * 4, original.get_height() * 4, false, Image.FORMAT_RGBA8);
 	for tile_type: TileType in texture_dict.keys():
@@ -137,10 +135,9 @@ func _create_preview_texture():
 		if texture == null:
 			continue;
 		
-		var texture_image := texture.get_image();
-		for position: Vector2i in placement_dict[tile_type].keys():
+		for tile_pos: Vector2i in placement_dict[tile_type].keys():
 			var rotator := texture.get_image();
-			var rotations := placement_dict[tile_type][position] as int;
+			var rotations := placement_dict[tile_type][tile_pos] as int;
 			var sprite = Sprite2D.new();
 			sprite.texture = texture;
 			
@@ -158,7 +155,7 @@ func _create_preview_texture():
 				3:
 					rotator.rotate_90(COUNTERCLOCKWISE);
 
-			preview_image.blit_rect(rotator, Rect2i(0,0, original.get_width(), original.get_height()), position * original.get_width())
+			preview_image.blit_rect(rotator, Rect2i(0,0, original.get_width(), original.get_height()), tile_pos * original.get_width())
 
 	var preview_texture = ImageTexture.create_from_image(preview_image);
 
@@ -233,7 +230,7 @@ func _init_form():
 	generated_texture = null;
 
 
-func get_current_texture():
+func _get_current_texture():
 	return _get_texture(current_texture_type);
 
 func _get_texture(tile_type: TileType):

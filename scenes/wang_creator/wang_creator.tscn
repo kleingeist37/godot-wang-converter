@@ -147,7 +147,7 @@ tile_type = 4
 
 [node name="Label" type="Label" parent="Panel/MarginContainer/VBoxContainer/hbox_main/vbox_content/step_1/HBoxContainer/btn_overlay_fill"]
 layout_mode = 2
-text = "Fill"
+text = "Overlay Fill"
 horizontal_alignment = 1
 
 [node name="btn_underlay_fill" type="VBoxContainer" parent="Panel/MarginContainer/VBoxContainer/hbox_main/vbox_content/step_1/HBoxContainer"]
@@ -163,16 +163,8 @@ tile_type = 5
 
 [node name="Label" type="Label" parent="Panel/MarginContainer/VBoxContainer/hbox_main/vbox_content/step_1/HBoxContainer/btn_underlay_fill"]
 layout_mode = 2
-text = "Fill"
+text = "Underlay Fill"
 horizontal_alignment = 1
-
-[node name="chk_overwrite_fill" type="CheckBox" parent="Panel/MarginContainer/VBoxContainer/hbox_main/vbox_content/step_1"]
-layout_mode = 2
-size_flags_horizontal = 4
-tooltip_text = "If this is checked, the fill areas of the corner tiles will be overwriten with the fill texture"
-mouse_default_cursor_shape = 2
-disabled = true
-text = "Overwrite with Fill Texture"
 
 [node name="HSeparator2" type="HSeparator" parent="Panel/MarginContainer/VBoxContainer/hbox_main/vbox_content/step_1"]
 layout_mode = 2
@@ -317,6 +309,7 @@ mouse_default_cursor_shape = 2
 text = "Close"
 
 [node name="btn_close" type="Button" parent="."]
+visible = false
 layout_mode = 1
 anchors_preset = 1
 anchor_left = 1.0

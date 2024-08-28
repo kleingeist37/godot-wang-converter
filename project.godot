@@ -10,7 +10,7 @@ config_version=5
 
 [application]
 
-config/name="wang_converter"
+config/name="Wang Tile Converter"
 run/main_scene="res://scenes/wang_creator/wang_creator.tscn"
 config/features=PackedStringArray("4.3", "Forward Plus")
 config/icon="res://icon.svg"
