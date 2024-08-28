@@ -128,24 +128,40 @@ layout_mode = 2
 mouse_default_cursor_shape = 2
 texture_normal = ExtResource("7_kgrkw")
 stretch_mode = 3
-tile_type = 0
 
 [node name="Label" type="Label" parent="Panel/MarginContainer/VBoxContainer/hbox_main/vbox_content/step_1/HBoxContainer/btn_border"]
 layout_mode = 2
 text = "Border"
 horizontal_alignment = 1
 
-[node name="btn_fill" type="VBoxContainer" parent="Panel/MarginContainer/VBoxContainer/hbox_main/vbox_content/step_1/HBoxContainer"]
+[node name="btn_overlay_fill" type="VBoxContainer" parent="Panel/MarginContainer/VBoxContainer/hbox_main/vbox_content/step_1/HBoxContainer"]
 layout_mode = 2
 
-[node name="tile_type_button_fill" parent="Panel/MarginContainer/VBoxContainer/hbox_main/vbox_content/step_1/HBoxContainer/btn_fill" instance=ExtResource("3_k5oar")]
+[node name="tile_type_button_overlay_fill" parent="Panel/MarginContainer/VBoxContainer/hbox_main/vbox_content/step_1/HBoxContainer/btn_overlay_fill" instance=ExtResource("3_k5oar")]
 unique_name_in_owner = true
 layout_mode = 2
 mouse_default_cursor_shape = 2
 texture_normal = ExtResource("8_s02kh")
 stretch_mode = 3
+tile_type = 4
 
-[node name="Label" type="Label" parent="Panel/MarginContainer/VBoxContainer/hbox_main/vbox_content/step_1/HBoxContainer/btn_fill"]
+[node name="Label" type="Label" parent="Panel/MarginContainer/VBoxContainer/hbox_main/vbox_content/step_1/HBoxContainer/btn_overlay_fill"]
+layout_mode = 2
+text = "Fill"
+horizontal_alignment = 1
+
+[node name="btn_underlay_fill" type="VBoxContainer" parent="Panel/MarginContainer/VBoxContainer/hbox_main/vbox_content/step_1/HBoxContainer"]
+layout_mode = 2
+
+[node name="tile_type_button_underlay_fill" parent="Panel/MarginContainer/VBoxContainer/hbox_main/vbox_content/step_1/HBoxContainer/btn_underlay_fill" instance=ExtResource("3_k5oar")]
+unique_name_in_owner = true
+layout_mode = 2
+mouse_default_cursor_shape = 2
+texture_normal = ExtResource("8_s02kh")
+stretch_mode = 3
+tile_type = 5
+
+[node name="Label" type="Label" parent="Panel/MarginContainer/VBoxContainer/hbox_main/vbox_content/step_1/HBoxContainer/btn_underlay_fill"]
 layout_mode = 2
 text = "Fill"
 horizontal_alignment = 1
