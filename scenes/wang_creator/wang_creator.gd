@@ -62,7 +62,7 @@ var placement_dict := {
 	TileType.UNDERLAY_FILL: {
 		Vector2i(0, 3): 0
 	}
-}
+};
 
 const VALID_EXTENSIONS := [
 	"png",
@@ -100,7 +100,7 @@ func _ready() -> void:
 	for i in VALID_EXTENSIONS.size():
 		pattern += VALID_EXTENSIONS[i]
 		if i < VALID_EXTENSIONS.size() - 1:
-			pattern += "|"
+			pattern += "|";
 	
 	regex_pattern = ".+\\.(%s)$" % pattern;
 	file_dialog.filters = filter_extensions;
@@ -120,7 +120,7 @@ func _import_texture(path):
 	texture_dict[current_texture_type] = texture;
 	button_dict[current_texture_type].texture_normal = texture;
 	
-	_create_preview_texture();	
+	_create_preview_texture();
 	
 	btn_export.disabled = texture_dict.size() < 1;
 
@@ -138,9 +138,7 @@ func _create_preview_texture():
 		for tile_pos: Vector2i in placement_dict[tile_type].keys():
 			var rotator := texture.get_image();
 			var rotations := placement_dict[tile_type][tile_pos] as int;
-			var sprite = Sprite2D.new();
-			sprite.texture = texture;
-			
+
 			#it doesn't fucking work with looping.
 			match(rotations):
 				0:
@@ -164,8 +162,8 @@ func _create_preview_texture():
 	
 
 func _export_texture(path: String):
-	var image = generated_texture.get_image()
-	if(!_has_valid_extension(path)):
+	var image = generated_texture.get_image();
+	if !_has_valid_extension(path):
 		image.save_png(path);
 		return;
 	
@@ -177,8 +175,7 @@ func _export_texture(path: String):
 		"jpg":
 			image.save_jpg(path, 1);
 		_:
-			image.save_png(path)
-	pass;
+			image.save_png(path);
 
 
 #region event listener
@@ -203,9 +200,8 @@ func _show_file_dialog(save_mode: bool):
 	
 	if save_mode:
 		file_dialog.current_file = "exported_tile_set.png";
-
 	
-	file_dialog.show() 
+	file_dialog.show();
 
 
 func _on_file_dialog_file_selected(path: String) -> void:
@@ -218,7 +214,7 @@ func _on_file_dialog_file_selected(path: String) -> void:
 
 
 #region helper
-func _init_form():
+func _init_form() -> void:
 	lbl_tile_size.text = "";
 	lbl_tile_set_size.text = "";
 	texture_dict.clear();
@@ -238,14 +234,11 @@ func _get_texture(tile_type: TileType):
 		return texture_dict[tile_type];
 
 
-
 func _has_valid_extension(file_name: String) -> bool:
 	var regex = RegEx.new();
 	var error = regex.compile(regex_pattern);
 	if error != OK:
 		return false;
 		
-	return regex.search(file_name.to_lower()) != null
-	
-	
+	return regex.search(file_name.to_lower()) != null;
 #endregion
