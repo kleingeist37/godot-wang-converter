@@ -1,4 +1,4 @@
-A Conversion Tool for the 4 Base Tiles of a Wang/DualMap TileSet and the filler tiles.
+A simple Conversion Tool for the 4 Base Tiles of a Wang/DualMap TileSet and the filler tiles.
 If your tile set has no underlay fill tile, ignore the underlay fill button. 
 
 The Converter recreates the texture after every selected file, so you can check step by step if the result will be as expected.
