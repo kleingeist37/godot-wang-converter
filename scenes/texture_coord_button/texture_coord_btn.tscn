@@ -1,0 +1,4 @@
+[gd_scene format=3 uid="uid://64be4c5kn1h3"]
+
+[node name="btn_0_0" type="TextureButton"]
+custom_minimum_size = Vector2(128, 128)

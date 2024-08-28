@@ -1,0 +1,327 @@
+[gd_scene load_steps=11 format=3 uid="uid://dwfe11p01aelk"]
+
+[ext_resource type="Theme" uid="uid://dq8swrgnskgqc" path="res://theme/ui_default_theme.tres" id="1_6f5oy"]
+[ext_resource type="Script" path="res://scenes/wang_creator/wang_creator.gd" id="2_yfe83"]
+[ext_resource type="Script" path="res://scenes/wang_creator/hbox_button_handler.gd" id="3_g0mty"]
+[ext_resource type="PackedScene" uid="uid://ct3wf6xd60idd" path="res://scenes/tile_type_button/tile_type_button.tscn" id="3_k5oar"]
+[ext_resource type="Texture2D" uid="uid://dkahxhgpvip48" path="res://sprites/icon_outer_corner.png" id="4_2ese2"]
+[ext_resource type="Texture2D" uid="uid://c3wr01h8uk6oq" path="res://sprites/icon_edge_connector.png" id="5_qr07o"]
+[ext_resource type="Texture2D" uid="uid://detdm22wmvidf" path="res://sprites/icon_inner_corner.png" id="6_qt0rl"]
+[ext_resource type="Texture2D" uid="uid://dcn4qmqmcfyit" path="res://sprites/icon_border.png" id="7_kgrkw"]
+[ext_resource type="Texture2D" uid="uid://4p4ojmpbq1ww" path="res://sprites/icon_fill.png" id="8_s02kh"]
+[ext_resource type="PackedScene" uid="uid://64be4c5kn1h3" path="res://scenes/texture_coord_button/texture_coord_btn.tscn" id="9_peiv5"]
+
+[node name="wang_creator" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme = ExtResource("1_6f5oy")
+script = ExtResource("2_yfe83")
+
+[node name="Panel" type="Panel" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme = ExtResource("1_6f5oy")
+
+[node name="MarginContainer" type="MarginContainer" parent="Panel"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="VBoxContainer" type="VBoxContainer" parent="Panel/MarginContainer"]
+layout_mode = 2
+
+[node name="hbox_main" type="HBoxContainer" parent="Panel/MarginContainer/VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="vbox_content" type="VBoxContainer" parent="Panel/MarginContainer/VBoxContainer/hbox_main"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="step_1" type="VBoxContainer" parent="Panel/MarginContainer/VBoxContainer/hbox_main/vbox_content"]
+layout_mode = 2
+
+[node name="lbl_title" type="Label" parent="Panel/MarginContainer/VBoxContainer/hbox_main/vbox_content/step_1"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 32
+text = "Wang TileSet Creator"
+horizontal_alignment = 1
+
+[node name="HSeparator" type="HSeparator" parent="Panel/MarginContainer/VBoxContainer/hbox_main/vbox_content/step_1"]
+layout_mode = 2
+
+[node name="lbl_step_1" type="Label" parent="Panel/MarginContainer/VBoxContainer/hbox_main/vbox_content/step_1"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 24
+text = "1. Import your Tiles"
+horizontal_alignment = 1
+
+[node name="HBoxContainer" type="HBoxContainer" parent="Panel/MarginContainer/VBoxContainer/hbox_main/vbox_content/step_1"]
+layout_mode = 2
+alignment = 1
+
+[node name="btn_outer_corner" type="VBoxContainer" parent="Panel/MarginContainer/VBoxContainer/hbox_main/vbox_content/step_1/HBoxContainer"]
+layout_mode = 2
+
+[node name="tile_type_button_outer_corner" parent="Panel/MarginContainer/VBoxContainer/hbox_main/vbox_content/step_1/HBoxContainer/btn_outer_corner" instance=ExtResource("3_k5oar")]
+unique_name_in_owner = true
+layout_mode = 2
+mouse_default_cursor_shape = 2
+texture_normal = ExtResource("4_2ese2")
+stretch_mode = 0
+tile_type = 2
+
+[node name="Label" type="Label" parent="Panel/MarginContainer/VBoxContainer/hbox_main/vbox_content/step_1/HBoxContainer/btn_outer_corner"]
+layout_mode = 2
+text = "Outer Corner"
+horizontal_alignment = 1
+
+[node name="btn_edge_connector" type="VBoxContainer" parent="Panel/MarginContainer/VBoxContainer/hbox_main/vbox_content/step_1/HBoxContainer"]
+layout_mode = 2
+
+[node name="tile_type_button_edge_connector" parent="Panel/MarginContainer/VBoxContainer/hbox_main/vbox_content/step_1/HBoxContainer/btn_edge_connector" instance=ExtResource("3_k5oar")]
+unique_name_in_owner = true
+layout_mode = 2
+mouse_default_cursor_shape = 2
+texture_normal = ExtResource("5_qr07o")
+stretch_mode = 3
+tile_type = 3
+
+[node name="Label" type="Label" parent="Panel/MarginContainer/VBoxContainer/hbox_main/vbox_content/step_1/HBoxContainer/btn_edge_connector"]
+layout_mode = 2
+text = "Edge Connector"
+horizontal_alignment = 1
+
+[node name="btn_inner_corner" type="VBoxContainer" parent="Panel/MarginContainer/VBoxContainer/hbox_main/vbox_content/step_1/HBoxContainer"]
+layout_mode = 2
+
+[node name="tile_type_button_inner_corner" parent="Panel/MarginContainer/VBoxContainer/hbox_main/vbox_content/step_1/HBoxContainer/btn_inner_corner" instance=ExtResource("3_k5oar")]
+unique_name_in_owner = true
+layout_mode = 2
+mouse_default_cursor_shape = 2
+texture_normal = ExtResource("6_qt0rl")
+stretch_mode = 3
+tile_type = 1
+
+[node name="Label" type="Label" parent="Panel/MarginContainer/VBoxContainer/hbox_main/vbox_content/step_1/HBoxContainer/btn_inner_corner"]
+layout_mode = 2
+text = "Inner Corner"
+horizontal_alignment = 1
+
+[node name="btn_border" type="VBoxContainer" parent="Panel/MarginContainer/VBoxContainer/hbox_main/vbox_content/step_1/HBoxContainer"]
+layout_mode = 2
+
+[node name="tile_type_button_border" parent="Panel/MarginContainer/VBoxContainer/hbox_main/vbox_content/step_1/HBoxContainer/btn_border" instance=ExtResource("3_k5oar")]
+unique_name_in_owner = true
+layout_mode = 2
+mouse_default_cursor_shape = 2
+texture_normal = ExtResource("7_kgrkw")
+stretch_mode = 3
+tile_type = 0
+
+[node name="Label" type="Label" parent="Panel/MarginContainer/VBoxContainer/hbox_main/vbox_content/step_1/HBoxContainer/btn_border"]
+layout_mode = 2
+text = "Border"
+horizontal_alignment = 1
+
+[node name="btn_fill" type="VBoxContainer" parent="Panel/MarginContainer/VBoxContainer/hbox_main/vbox_content/step_1/HBoxContainer"]
+layout_mode = 2
+
+[node name="tile_type_button_fill" parent="Panel/MarginContainer/VBoxContainer/hbox_main/vbox_content/step_1/HBoxContainer/btn_fill" instance=ExtResource("3_k5oar")]
+unique_name_in_owner = true
+layout_mode = 2
+mouse_default_cursor_shape = 2
+texture_normal = ExtResource("8_s02kh")
+stretch_mode = 3
+
+[node name="Label" type="Label" parent="Panel/MarginContainer/VBoxContainer/hbox_main/vbox_content/step_1/HBoxContainer/btn_fill"]
+layout_mode = 2
+text = "Fill"
+horizontal_alignment = 1
+
+[node name="chk_overwrite_fill" type="CheckBox" parent="Panel/MarginContainer/VBoxContainer/hbox_main/vbox_content/step_1"]
+layout_mode = 2
+size_flags_horizontal = 4
+tooltip_text = "If this is checked, the fill areas of the corner tiles will be overwriten with the fill texture"
+mouse_default_cursor_shape = 2
+disabled = true
+text = "Overwrite with Fill Texture"
+
+[node name="HSeparator2" type="HSeparator" parent="Panel/MarginContainer/VBoxContainer/hbox_main/vbox_content/step_1"]
+layout_mode = 2
+
+[node name="step_2" type="VBoxContainer" parent="Panel/MarginContainer/VBoxContainer/hbox_main/vbox_content"]
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="HBoxContainer" type="HBoxContainer" parent="Panel/MarginContainer/VBoxContainer/hbox_main/vbox_content/step_2"]
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="GridContainer" type="GridContainer" parent="Panel/MarginContainer/VBoxContainer/hbox_main/vbox_content/step_2/HBoxContainer"]
+visible = false
+custom_minimum_size = Vector2(512, 0)
+layout_mode = 2
+size_flags_horizontal = 3
+columns = 4
+
+[node name="btn_0_0" parent="Panel/MarginContainer/VBoxContainer/hbox_main/vbox_content/step_2/HBoxContainer/GridContainer" instance=ExtResource("9_peiv5")]
+layout_mode = 2
+
+[node name="btn_0_1" type="TextureButton" parent="Panel/MarginContainer/VBoxContainer/hbox_main/vbox_content/step_2/HBoxContainer/GridContainer"]
+custom_minimum_size = Vector2(128, 128)
+layout_mode = 2
+
+[node name="btn_0_2" type="TextureButton" parent="Panel/MarginContainer/VBoxContainer/hbox_main/vbox_content/step_2/HBoxContainer/GridContainer"]
+custom_minimum_size = Vector2(128, 128)
+layout_mode = 2
+
+[node name="TextureButton4" type="TextureButton" parent="Panel/MarginContainer/VBoxContainer/hbox_main/vbox_content/step_2/HBoxContainer/GridContainer"]
+custom_minimum_size = Vector2(128, 128)
+layout_mode = 2
+
+[node name="TextureButton5" type="TextureButton" parent="Panel/MarginContainer/VBoxContainer/hbox_main/vbox_content/step_2/HBoxContainer/GridContainer"]
+custom_minimum_size = Vector2(128, 128)
+layout_mode = 2
+
+[node name="TextureButton6" type="TextureButton" parent="Panel/MarginContainer/VBoxContainer/hbox_main/vbox_content/step_2/HBoxContainer/GridContainer"]
+custom_minimum_size = Vector2(128, 128)
+layout_mode = 2
+
+[node name="TextureButton7" type="TextureButton" parent="Panel/MarginContainer/VBoxContainer/hbox_main/vbox_content/step_2/HBoxContainer/GridContainer"]
+custom_minimum_size = Vector2(128, 128)
+layout_mode = 2
+
+[node name="TextureButton8" type="TextureButton" parent="Panel/MarginContainer/VBoxContainer/hbox_main/vbox_content/step_2/HBoxContainer/GridContainer"]
+custom_minimum_size = Vector2(128, 128)
+layout_mode = 2
+
+[node name="TextureButton9" type="TextureButton" parent="Panel/MarginContainer/VBoxContainer/hbox_main/vbox_content/step_2/HBoxContainer/GridContainer"]
+custom_minimum_size = Vector2(128, 128)
+layout_mode = 2
+
+[node name="TextureButton10" type="TextureButton" parent="Panel/MarginContainer/VBoxContainer/hbox_main/vbox_content/step_2/HBoxContainer/GridContainer"]
+custom_minimum_size = Vector2(128, 128)
+layout_mode = 2
+
+[node name="TextureButton11" type="TextureButton" parent="Panel/MarginContainer/VBoxContainer/hbox_main/vbox_content/step_2/HBoxContainer/GridContainer"]
+custom_minimum_size = Vector2(128, 128)
+layout_mode = 2
+
+[node name="TextureButton12" type="TextureButton" parent="Panel/MarginContainer/VBoxContainer/hbox_main/vbox_content/step_2/HBoxContainer/GridContainer"]
+custom_minimum_size = Vector2(128, 128)
+layout_mode = 2
+
+[node name="TextureButton13" type="TextureButton" parent="Panel/MarginContainer/VBoxContainer/hbox_main/vbox_content/step_2/HBoxContainer/GridContainer"]
+custom_minimum_size = Vector2(128, 128)
+layout_mode = 2
+
+[node name="TextureButton14" type="TextureButton" parent="Panel/MarginContainer/VBoxContainer/hbox_main/vbox_content/step_2/HBoxContainer/GridContainer"]
+custom_minimum_size = Vector2(128, 128)
+layout_mode = 2
+
+[node name="TextureButton15" type="TextureButton" parent="Panel/MarginContainer/VBoxContainer/hbox_main/vbox_content/step_2/HBoxContainer/GridContainer"]
+custom_minimum_size = Vector2(128, 128)
+layout_mode = 2
+
+[node name="TextureButton16" type="TextureButton" parent="Panel/MarginContainer/VBoxContainer/hbox_main/vbox_content/step_2/HBoxContainer/GridContainer"]
+custom_minimum_size = Vector2(128, 128)
+layout_mode = 2
+
+[node name="VBoxContainer2" type="VBoxContainer" parent="Panel/MarginContainer/VBoxContainer/hbox_main/vbox_content/step_2/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="texture_preview" type="TextureRect" parent="Panel/MarginContainer/VBoxContainer/hbox_main/vbox_content/step_2/HBoxContainer/VBoxContainer2"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_vertical = 3
+texture = ExtResource("7_kgrkw")
+expand_mode = 2
+stretch_mode = 3
+
+[node name="VSeparator" type="VSeparator" parent="Panel/MarginContainer/VBoxContainer/hbox_main/vbox_content/step_2/HBoxContainer"]
+layout_mode = 2
+
+[node name="VBoxContainer" type="VBoxContainer" parent="Panel/MarginContainer/VBoxContainer/hbox_main/vbox_content/step_2/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="lbl_step_2" type="Label" parent="Panel/MarginContainer/VBoxContainer/hbox_main/vbox_content/step_2/HBoxContainer/VBoxContainer"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 24
+text = "2. Check the Data"
+horizontal_alignment = 1
+
+[node name="lbl_tile_size" type="Label" parent="Panel/MarginContainer/VBoxContainer/hbox_main/vbox_content/step_2/HBoxContainer/VBoxContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+
+[node name="lbl_tile_set_size" type="Label" parent="Panel/MarginContainer/VBoxContainer/hbox_main/vbox_content/step_2/HBoxContainer/VBoxContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+
+[node name="btn_export" type="Button" parent="Panel/MarginContainer/VBoxContainer/hbox_main/vbox_content/step_2/HBoxContainer/VBoxContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_vertical = 10
+mouse_default_cursor_shape = 2
+text = "3. Export the Texture"
+
+[node name="HSeparator" type="HSeparator" parent="Panel/MarginContainer/VBoxContainer"]
+layout_mode = 2
+
+[node name="hbox_button_handler" type="HBoxContainer" parent="Panel/MarginContainer/VBoxContainer"]
+custom_minimum_size = Vector2(0, 50)
+layout_mode = 2
+script = ExtResource("3_g0mty")
+
+[node name="btn_new" type="Button" parent="Panel/MarginContainer/VBoxContainer/hbox_button_handler"]
+custom_minimum_size = Vector2(150, 0)
+layout_mode = 2
+size_flags_horizontal = 10
+mouse_default_cursor_shape = 2
+text = "New"
+
+[node name="btn_close" type="Button" parent="Panel/MarginContainer/VBoxContainer/hbox_button_handler"]
+custom_minimum_size = Vector2(150, 0)
+layout_mode = 2
+mouse_default_cursor_shape = 2
+text = "Close"
+
+[node name="btn_close" type="Button" parent="."]
+layout_mode = 1
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -50.0
+offset_bottom = 53.0
+grow_horizontal = 0
+mouse_default_cursor_shape = 2
+text = "X"
+flat = true
+
+[node name="file_dialog" type="FileDialog" parent="."]
+initial_position = 1
+size = Vector2i(600, 600)
+force_native = true
+access = 2
+filters = PackedStringArray("*.png", "*.jpg", "*.jpeg", "*.bmp", "*.tga", "*.gif", "*.webp")
+use_native_dialog = true
+
+[connection signal="pressed" from="Panel/MarginContainer/VBoxContainer/hbox_main/vbox_content/step_2/HBoxContainer/VBoxContainer/btn_export" to="Panel/MarginContainer/VBoxContainer/hbox_button_handler" method="_on_btn_export_pressed"]
+[connection signal="pressed" from="Panel/MarginContainer/VBoxContainer/hbox_button_handler/btn_new" to="Panel/MarginContainer/VBoxContainer/hbox_button_handler" method="_on_btn_new_pressed"]
+[connection signal="pressed" from="Panel/MarginContainer/VBoxContainer/hbox_button_handler/btn_close" to="Panel/MarginContainer/VBoxContainer/hbox_button_handler" method="_on_btn_close_pressed"]
+[connection signal="pressed" from="btn_close" to="Panel/MarginContainer/VBoxContainer/hbox_button_handler" method="_on_btn_close_pressed"]
+[connection signal="file_selected" from="file_dialog" to="." method="_on_file_dialog_file_selected"]
