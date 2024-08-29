@@ -5,7 +5,7 @@
 [node name="tile_type_button" type="TextureButton"]
 custom_minimum_size = Vector2(128, 128)
 ignore_texture_size = true
-stretch_mode = 4
+stretch_mode = 0
 script = ExtResource("1_ewkk8")
 
 [node name="btn_remove" type="Button" parent="."]

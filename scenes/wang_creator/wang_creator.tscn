@@ -1,4 +1,4 @@
-[gd_scene load_steps=11 format=3 uid="uid://dwfe11p01aelk"]
+[gd_scene load_steps=12 format=3 uid="uid://dwfe11p01aelk"]
 
 [ext_resource type="Theme" uid="uid://dq8swrgnskgqc" path="res://theme/ui_default_theme.tres" id="1_6f5oy"]
 [ext_resource type="Script" path="res://scenes/wang_creator/wang_creator.gd" id="2_yfe83"]
@@ -10,6 +10,7 @@
 [ext_resource type="Texture2D" uid="uid://detdm22wmvidf" path="res://sprites/icon_inner_corner.png" id="6_qt0rl"]
 [ext_resource type="Texture2D" uid="uid://dcn4qmqmcfyit" path="res://sprites/icon_border.png" id="7_kgrkw"]
 [ext_resource type="Texture2D" uid="uid://4p4ojmpbq1ww" path="res://sprites/icon_fill.png" id="8_s02kh"]
+[ext_resource type="PackedScene" uid="uid://domowdth78has" path="res://scenes/error_panel/error_panel.tscn" id="11_0mu7d"]
 
 [node name="wang_creator" type="Control"]
 layout_mode = 3
@@ -86,7 +87,6 @@ unique_name_in_owner = true
 layout_mode = 2
 mouse_default_cursor_shape = 2
 texture_normal = ExtResource("4_2ese2")
-stretch_mode = 0
 tile_type = 2
 
 [node name="Label" type="Label" parent="Panel/MarginContainer/VBoxContainer/hbox_main/vbox_content/step_1/HBoxContainer/btn_outer_corner"]
@@ -149,7 +149,6 @@ unique_name_in_owner = true
 layout_mode = 2
 mouse_default_cursor_shape = 2
 texture_normal = ExtResource("8_s02kh")
-stretch_mode = 3
 tile_type = 4
 
 [node name="Label" type="Label" parent="Panel/MarginContainer/VBoxContainer/hbox_main/vbox_content/step_1/HBoxContainer/btn_overlay_fill"]
@@ -204,8 +203,9 @@ size_flags_vertical = 3
 [node name="texture_preview" type="TextureRect" parent="Panel/MarginContainer/VBoxContainer/hbox_main/vbox_content/step_2/HBoxContainer/ScrollContainer/VBoxContainer2"]
 unique_name_in_owner = true
 layout_mode = 2
+size_flags_horizontal = 4
 size_flags_vertical = 3
-expand_mode = 2
+expand_mode = 5
 stretch_mode = 3
 
 [node name="VSeparator" type="VSeparator" parent="Panel/MarginContainer/VBoxContainer/hbox_main/vbox_content/step_2/HBoxContainer"]
@@ -304,6 +304,11 @@ size = Vector2i(600, 600)
 force_native = true
 access = 2
 use_native_dialog = true
+
+[node name="error_panel" parent="." instance=ExtResource("11_0mu7d")]
+unique_name_in_owner = true
+visible = false
+layout_mode = 1
 
 [connection signal="pressed" from="Panel/MarginContainer/VBoxContainer/hbox_main/vbox_content/step_2/HBoxContainer/VBoxContainer/btn_recreate_texture" to="ui_controller" method="_on_btn_recreate_texture_pressed"]
 [connection signal="pressed" from="Panel/MarginContainer/VBoxContainer/hbox_main/vbox_content/step_2/HBoxContainer/VBoxContainer/btn_export" to="Panel/MarginContainer/VBoxContainer/hbox_button_bar" method="_on_btn_export_pressed"]

@@ -3,6 +3,7 @@ class_name WangConverter extends Control
 const TileType = EditorEnums.TileType;
 const FillMode = EditorEnums.FillMode;
 @onready var ui_controller: UIController = %ui_controller
+@onready var error_panel: ErrorPanel = %error_panel
 
 var placement_dict := {
 	TileType.BORDER: {
@@ -80,6 +81,14 @@ func create_preview_texture():
 	
 	if tile_height == 0:
 		tile_height = original.get_height();
+		
+	if tile_width != 0 and original.get_width() != tile_width:
+		error_panel.show();
+		return;
+		
+	if tile_height != 0 and original.get_height() != tile_width:
+		error_panel.show();
+		return;
 	
 	
 	var preview_image := Image.create(tile_width * 4, tile_height * 4, false, Image.FORMAT_RGBA8);
@@ -102,6 +111,8 @@ func _generate_border_tiles(preview_image: Image) -> Image:
 		var texture = _get_texture(tile_type) as ImageTexture;
 		if texture == null:
 			continue;
+			
+		
 		
 		for tile_pos: Vector2i in placement_dict[tile_type].keys():
 			var rotator := texture.get_image();
@@ -190,7 +201,6 @@ func _get_texture(tile_type: TileType):
 
 
 func _mix_colors(base_color: Color, overlay_color: Color) -> Color:
-
 	var alpha_overlay = overlay_color.a;
 	var alpha_base = base_color.a * (1.0 - alpha_overlay);
 	var final_alpha = alpha_overlay + alpha_base;
