@@ -174,7 +174,8 @@ layout_mode = 2
 
 [node name="lbl_info" type="Label" parent="Panel/MarginContainer/VBoxContainer/hbox_main/vbox_content/step_1"]
 layout_mode = 2
-text = "The border tiles must be white in the areas where the overlay fill texture shall be applied"
+text = "The border tiles must be white in the areas where the overlay fill texture shall be applied.
+Tiles Sizes bigger than 256 x 256 work, but also need more computing time"
 horizontal_alignment = 1
 
 [node name="HSeparator2" type="HSeparator" parent="Panel/MarginContainer/VBoxContainer/hbox_main/vbox_content/step_1"]
