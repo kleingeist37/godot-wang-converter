@@ -20,7 +20,7 @@ enum TileType {
 @onready var lbl_tile_set_size: Label = %lbl_tile_set_size
 @onready var btn_export: Button = %btn_export
 @onready var texture_preview: TextureRect = %texture_preview;
-
+@onready var spinbox_white_tolerance: SpinBox = %spinbox_white_tolerance;
 
 
 var orig_icons := {
@@ -70,6 +70,7 @@ const VALID_EXTENSIONS := [
 	"webp"
 ];
 
+
 var filter_extensions: PackedStringArray;
 var regex_pattern;
 var save_state := false; 
@@ -93,9 +94,12 @@ func _ready() -> void:
 	EditorSignals.show_texture_file_dialog.connect(_on_show_texture_file_dialog);
 	_init_form();
 	
+	var filter : String;
 	for valid_extension: String in VALID_EXTENSIONS:
-		filter_extensions.append("*.%s ; %s Images" % [valid_extension, valid_extension.to_upper()]);
-		
+		filter += "*.%s ;" % valid_extension;
+		#filter_extensions.append("*.%s ; %s Images" % [valid_extension, valid_extension.to_upper()]);
+	
+	#file_dialog.filters.append(filter);
 	var pattern = "";
 	for i in VALID_EXTENSIONS.size():
 		pattern += VALID_EXTENSIONS[i]
@@ -103,7 +107,7 @@ func _ready() -> void:
 			pattern += "|";
 	
 	regex_pattern = ".+\\.(%s)$" % pattern;
-	file_dialog.filters = filter_extensions;
+
 
 
 func _import_texture(path):
@@ -178,7 +182,9 @@ func generate_border_tiles(preview_image: Image) -> Image:
 				for y in range(start_pos_y, max_range_y):
 					var source_pixel = rotator.get_pixel(x % rotator.get_width(), y % rotator.get_height());
 					if source_pixel.a != 0:
-						preview_image.set_pixel(x,y, source_pixel);
+						var base_pixel := preview_image.get_pixel(x, y);
+						var mixed_pixel := _mix_colors(base_pixel, source_pixel);
+						preview_image.set_pixel(x,y, mixed_pixel);
 
 			
 	return preview_image;
@@ -187,10 +193,8 @@ func generate_border_tiles(preview_image: Image) -> Image:
 enum FillMode { UNDERLAY, OVERLAY};
 func generate_fill_texture(fill_mode: FillMode , target_image: Image, source_image: Image, tile_width: int, tile_height: int, factor: int = 4) -> Image:
 	
-	var counter = 0;
 	var target_width = tile_width * factor
 	var target_height = tile_height * factor
-			
 	
 	for y in target_height:
 		for x in target_width:
@@ -204,41 +208,13 @@ func generate_fill_texture(fill_mode: FillMode , target_image: Image, source_ima
 					target_image.set_pixel(x, y, source_pixel);
 				
 				FillMode.OVERLAY:
-					if target_color == Color(1, 1, 1, 1):
-						target_image.set_pixel(x, y, source_pixel);
+					if _is_near_white(target_color, spinbox_white_tolerance.value):
+						var mixed_pixel := _mix_colors(target_color, source_pixel);
+						target_image.set_pixel(x,y, mixed_pixel);
 
-		counter += 1;
 	return target_image;
 		
 
-#func generate_border_tiles(preview_image: Image, width: int, height: int) -> Image:
-	#for tile_type: TileType in texture_dict.keys():
-		#var texture = _get_texture(tile_type) as ImageTexture;
-		#if texture == null:
-			#continue;
-		#
-		#for tile_pos: Vector2i in placement_dict[tile_type].keys():
-			#var rotator := texture.get_image();
-			#var rotations := placement_dict[tile_type][tile_pos] as int;
-#
-			##it doesn't fucking work with looping.
-			#match(rotations):
-				#0:
-					#pass;
-				#1:
-					#rotator.rotate_90(CLOCKWISE);
-#
-				#2: 
-					#rotator.rotate_90(CLOCKWISE);
-					#rotator.rotate_90(CLOCKWISE);
-#
-				#3:
-					#rotator.rotate_90(COUNTERCLOCKWISE);
-#
-			#preview_image.blit_rect(rotator, Rect2i(0,0, width, height), tile_pos * width)
-		#
-	#return preview_image;
-	
 
 func _export_texture(path: String):
 	var image = generated_texture.get_image();
@@ -311,6 +287,23 @@ func _get_current_texture():
 func _get_texture(tile_type: TileType):
 	if texture_dict.has(tile_type):
 		return texture_dict[tile_type];
+
+
+func _mix_colors(base_color: Color, overlay_color: Color) -> Color:
+
+	var alpha_overlay = overlay_color.a;
+	var alpha_base = base_color.a * (1.0 - alpha_overlay);
+	var final_alpha = alpha_overlay + alpha_base;
+	var final_color = overlay_color * alpha_overlay + base_color * alpha_base;
+	
+	if final_alpha > 0:
+		final_color /= final_alpha;
+		
+	final_color.a = final_alpha;
+	return final_color
+
+func _is_near_white(color: Color, tolerance: float) -> bool:
+	return abs(color.r - 1.0) <= tolerance and abs(color.g - 1.0) <= tolerance and abs(color.b - 1.0) <= tolerance and color.a == 1.0
 
 
 func _has_valid_extension(file_name: String) -> bool:

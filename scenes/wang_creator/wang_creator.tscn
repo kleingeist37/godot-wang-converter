@@ -166,6 +166,11 @@ layout_mode = 2
 text = "Underlay Fill"
 horizontal_alignment = 1
 
+[node name="lbl_info" type="Label" parent="Panel/MarginContainer/VBoxContainer/hbox_main/vbox_content/step_1"]
+layout_mode = 2
+text = "The border tiles must be white in the areas where the overlay fill texture is to be applied. For underlay transparent."
+horizontal_alignment = 1
+
 [node name="HSeparator2" type="HSeparator" parent="Panel/MarginContainer/VBoxContainer/hbox_main/vbox_content/step_1"]
 layout_mode = 2
 
@@ -269,8 +274,31 @@ size_flags_horizontal = 3
 [node name="lbl_step_2" type="Label" parent="Panel/MarginContainer/VBoxContainer/hbox_main/vbox_content/step_2/HBoxContainer/VBoxContainer"]
 layout_mode = 2
 theme_override_font_sizes/font_size = 24
-text = "2. Check the Data"
+text = "2. Data & Adjustment"
 horizontal_alignment = 1
+
+[node name="spinbox_tolerance_factor" type="VBoxContainer" parent="Panel/MarginContainer/VBoxContainer/hbox_main/vbox_content/step_2/HBoxContainer/VBoxContainer"]
+custom_minimum_size = Vector2(150, 0)
+layout_mode = 2
+size_flags_horizontal = 3
+tooltip_text = "If the texture isn't PixelPerfect, the fill texture can have some white fragments, changes this value to lower the tolerance."
+alignment = 2
+
+[node name="Label" type="Label" parent="Panel/MarginContainer/VBoxContainer/hbox_main/vbox_content/step_2/HBoxContainer/VBoxContainer/spinbox_tolerance_factor"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 13
+text = "Alpha Tolerance Factor"
+
+[node name="spinbox_white_tolerance" type="SpinBox" parent="Panel/MarginContainer/VBoxContainer/hbox_main/vbox_content/step_2/HBoxContainer/VBoxContainer/spinbox_tolerance_factor"]
+unique_name_in_owner = true
+layout_mode = 2
+mouse_default_cursor_shape = 2
+max_value = 1.0
+step = 0.01
+value = 0.1
+
+[node name="HSeparator" type="HSeparator" parent="Panel/MarginContainer/VBoxContainer/hbox_main/vbox_content/step_2/HBoxContainer/VBoxContainer"]
+layout_mode = 2
 
 [node name="lbl_tile_size" type="Label" parent="Panel/MarginContainer/VBoxContainer/hbox_main/vbox_content/step_2/HBoxContainer/VBoxContainer"]
 unique_name_in_owner = true
@@ -287,7 +315,7 @@ size_flags_vertical = 10
 mouse_default_cursor_shape = 2
 text = "3. Export the Texture"
 
-[node name="HSeparator" type="HSeparator" parent="Panel/MarginContainer/VBoxContainer"]
+[node name="HSeparator3" type="HSeparator" parent="Panel/MarginContainer/VBoxContainer"]
 layout_mode = 2
 
 [node name="hbox_button_handler" type="HBoxContainer" parent="Panel/MarginContainer/VBoxContainer"]
@@ -326,7 +354,6 @@ initial_position = 1
 size = Vector2i(600, 600)
 force_native = true
 access = 2
-filters = PackedStringArray("*.png", "*.jpg", "*.jpeg", "*.bmp", "*.tga", "*.gif", "*.webp")
 use_native_dialog = true
 
 [connection signal="pressed" from="Panel/MarginContainer/VBoxContainer/hbox_main/vbox_content/step_2/HBoxContainer/VBoxContainer/btn_export" to="Panel/MarginContainer/VBoxContainer/hbox_button_handler" method="_on_btn_export_pressed"]
