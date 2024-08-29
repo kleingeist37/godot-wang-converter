@@ -1,7 +1,7 @@
 class_name UIController extends Control
 
 const TileType = EditorEnums.TileType;
-@onready var wang_creator: WangConverter = $"..";
+@onready var wang_creator: WangCreator = $"..";
 
 var orig_icons := {
 	TileType.BORDER: preload("res://sprites/icon_border.png") as Texture2D,

@@ -1,8 +1,10 @@
-class_name WangConverter extends Control
+class_name WangCreator extends Control
 
 const TileType = EditorEnums.TileType;
 const FillMode = EditorEnums.FillMode;
 const ErrorType = EditorEnums.ErrorType;
+
+
 @onready var ui_controller: UIController = %ui_controller
 @onready var error_panel: ErrorPanel = %error_panel
 
@@ -37,7 +39,7 @@ var placement_dict := {
 	}
 };
 
-
+const TILE_SET_FACTOR := 4;
 const VALID_EXTENSIONS := [
 	"png",
 	"jpg",
@@ -72,7 +74,7 @@ func import_texture(path):
 	
 	var texture_size := texture.get_size();
 	ui_controller.set_tile_size_label("Calculated Tile Size: %s" % texture_size);
-	ui_controller.set_tile_set_size_label("Calculated TileSet Size: %s" % (texture_size * 4));
+	ui_controller.set_tile_set_size_label("Calculated TileSet Size: %s" % (texture_size * TILE_SET_FACTOR));
 
 	texture_dict[current_texture_type] = texture;
 	ui_controller.button_dict[current_texture_type].texture_normal = texture;
@@ -110,7 +112,7 @@ func create_preview_texture():
 		return;
 	
 	
-	var preview_image := Image.create(tile_size * 4, tile_size * 4, false, Image.FORMAT_RGBA8);
+	var preview_image := Image.create(tile_size * TILE_SET_FACTOR, tile_size * TILE_SET_FACTOR, false, Image.FORMAT_RGBA8);
 	if texture_dict.has(TileType.UNDERLAY_FILL) \
 	&& texture_dict[TileType.UNDERLAY_FILL] != null:
 		preview_image = _generate_fill_texture(FillMode.UNDERLAY, preview_image, texture_dict[TileType.UNDERLAY_FILL].get_image());
@@ -167,15 +169,15 @@ func _generate_border_tiles(preview_image: Image) -> Image:
 
 
 
-func _generate_fill_texture(fill_mode: FillMode , target_image: Image, source_image: Image, factor: int = 4) -> Image:
-	var max_size := tile_size * factor;
+func _generate_fill_texture(fill_mode: FillMode , target_image: Image, source_image: Image) -> Image:
+	var max_size := tile_size * TILE_SET_FACTOR;
 	
 	for y in max_size:
 		for x in max_size:
-			var pos_x := x % tile_size as int;
-			var pos_y := y % tile_size as int;
+			var source_pos_x := x % tile_size as int;
+			var source_pos_y := y % tile_size as int;
 			var target_color := target_image.get_pixel(x, y);
-			var source_pixel := source_image.get_pixel(pos_x, pos_y);
+			var source_pixel := source_image.get_pixel(source_pos_x, source_pos_y);
 			
 			match fill_mode:
 				FillMode.UNDERLAY:
@@ -225,7 +227,7 @@ func _mix_colors(base_color: Color, overlay_color: Color) -> Color:
 		final_color /= final_alpha;
 		
 	final_color.a = final_alpha;
-	return final_color
+	return final_color;
 
 func _is_near_white(color: Color, tolerance: float) -> bool:
 	return abs(color.r - 1.0) <= tolerance and abs(color.g - 1.0) <= tolerance and abs(color.b - 1.0) <= tolerance and color.a == 1.0
