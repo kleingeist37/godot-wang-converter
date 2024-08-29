@@ -121,7 +121,6 @@ func _init_form() -> void:
 	texture_preview.texture = null;
 	wang_creator.texture_dict.clear();
 	wang_creator.generated_texture = null;
-	wang_creator.tile_width = 0;
-	wang_creator.tile_height = 0;
+	wang_creator.tile_size = 0;
 	
 #endregion

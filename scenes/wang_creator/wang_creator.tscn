@@ -1,4 +1,4 @@
-[gd_scene load_steps=12 format=3 uid="uid://dwfe11p01aelk"]
+[gd_scene load_steps=13 format=3 uid="uid://dwfe11p01aelk"]
 
 [ext_resource type="Theme" uid="uid://dq8swrgnskgqc" path="res://theme/ui_default_theme.tres" id="1_6f5oy"]
 [ext_resource type="Script" path="res://scenes/wang_creator/wang_creator.gd" id="2_yfe83"]
@@ -10,6 +10,7 @@
 [ext_resource type="Texture2D" uid="uid://detdm22wmvidf" path="res://sprites/icon_inner_corner.png" id="6_qt0rl"]
 [ext_resource type="Texture2D" uid="uid://dcn4qmqmcfyit" path="res://sprites/icon_border.png" id="7_kgrkw"]
 [ext_resource type="Texture2D" uid="uid://4p4ojmpbq1ww" path="res://sprites/icon_fill.png" id="8_s02kh"]
+[ext_resource type="Texture2D" uid="uid://dajr1f3mtxruj" path="res://sprites/icon_underlay_fill.png" id="10_m5i2y"]
 [ext_resource type="PackedScene" uid="uid://domowdth78has" path="res://scenes/error_panel/error_panel.tscn" id="11_0mu7d"]
 
 [node name="wang_creator" type="Control"]
@@ -160,8 +161,7 @@ layout_mode = 2
 unique_name_in_owner = true
 layout_mode = 2
 mouse_default_cursor_shape = 2
-texture_normal = ExtResource("8_s02kh")
-stretch_mode = 3
+texture_normal = ExtResource("10_m5i2y")
 tile_type = 5
 
 [node name="Label" type="Label" parent="Panel/MarginContainer/VBoxContainer/hbox_main/vbox_content/step_1/HBoxContainer/btn_underlay_fill"]
