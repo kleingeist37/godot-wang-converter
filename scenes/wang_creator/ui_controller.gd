@@ -119,7 +119,7 @@ func _init_form() -> void:
 		button_dict[key].texture_normal = orig_icons[key];
 		
 	texture_preview.texture = null;
-	wang_creator.clear();
+	wang_creator.texture_dict.clear();
 	wang_creator.generated_texture = null;
 	
 #endregion

@@ -85,13 +85,13 @@ func create_preview_texture():
 	var preview_image := Image.create(tile_width * 4, tile_height * 4, false, Image.FORMAT_RGBA8);
 	if texture_dict.has(TileType.UNDERLAY_FILL) \
 	&& texture_dict[TileType.UNDERLAY_FILL] != null:
-		preview_image = _generate_fill_texture(FillMode.UNDERLAY, preview_image, texture_dict[TileType.UNDERLAY_FILL].get_image(), tile_width, tile_height, 4);
+		preview_image = _generate_fill_texture(FillMode.UNDERLAY, preview_image, texture_dict[TileType.UNDERLAY_FILL].get_image());
 
 	preview_image = _generate_border_tiles(preview_image);
 	
 	if texture_dict.has(TileType.OVERLAY_FILL) \
 	&& texture_dict[TileType.OVERLAY_FILL] != null:
-		preview_image = _generate_fill_texture(FillMode.OVERLAY, preview_image, texture_dict[TileType.OVERLAY_FILL].get_image(), tile_width, tile_height, 4);
+		preview_image = _generate_fill_texture(FillMode.OVERLAY, preview_image, texture_dict[TileType.OVERLAY_FILL].get_image());
 	var preview_texture = ImageTexture.create_from_image(preview_image);
 
 	ui_controller.texture_preview.texture = preview_texture;
@@ -139,7 +139,7 @@ func _generate_border_tiles(preview_image: Image) -> Image:
 
 
 
-func _generate_fill_texture(fill_mode: FillMode , target_image: Image, source_image: Image, tile_width: int, tile_height: int, factor: int = 4) -> Image:
+func _generate_fill_texture(fill_mode: FillMode , target_image: Image, source_image: Image, factor: int = 4) -> Image:
 	
 	var target_width = tile_width * factor
 	var target_height = tile_height * factor
