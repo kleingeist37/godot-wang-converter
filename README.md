@@ -2,7 +2,7 @@
 
 A simple Conversion Tool for the 4 Base Tiles of a Wang/DualMap TileSet and the filler tiles.
 
-<img width="721" alt="overview" src="https://github.com/user-attachments/assets/165b5135-3d5f-4ca3-893d-65ce1b3f581b">
+<img width="720" alt="overview" src="https://github.com/user-attachments/assets/9b5577ef-547d-43e1-aa4a-3ffe3e6ae180">
 
 
 The tool is written in Godot 4.3 and published under MIT License.
@@ -24,20 +24,21 @@ Here are some example:
 
 *Step by Step Creation*
 
-<img width="721" alt="example_1" src="https://github.com/user-attachments/assets/c977653e-fdcd-49a5-8a84-ccea8eca9298">
+<img width="720" alt="example_1" src="https://github.com/user-attachments/assets/86900098-523d-4524-909b-e52889611e16">
+
 
 *Result 1*
 
-<img width="721" alt="example_2" src="https://github.com/user-attachments/assets/a1356a58-e116-45a9-861b-87aa2f89f044">
+<img width="785" alt="example_2" src="https://github.com/user-attachments/assets/91f35829-afaf-4169-af39-d69ffc2b07f9">
 
 *Result 2*
 
-<img width="721" alt="example_3" src="https://github.com/user-attachments/assets/b1485924-7fe8-4459-9453-1d647d111155">
+<img width="785" alt="example_3" src="https://github.com/user-attachments/assets/c12a77a0-ca73-4d97-aa53-ea99b9d29771">
 
 *TileSet without underlay*
 
-<img width="721" alt="example_4" src="https://github.com/user-attachments/assets/af6cb2fa-dffa-4ed4-b8cd-80344da9dea2">
+<img width="785" alt="example_4" src="https://github.com/user-attachments/assets/22f96d1d-8718-42fa-9540-7444f68a43b7">
 
-*TileSet with outer shadow but not white border areas*
+*TileSet with outer shadow but non white border areas*
 
-<img width="721" alt="grass_shadow" src="https://github.com/user-attachments/assets/8ece160f-0237-4c53-948e-b6ed1e986bcc">
+<img width="785" alt="grass_shadow" src="https://github.com/user-attachments/assets/98894422-89f6-4994-9f12-6e679136d6b5">
