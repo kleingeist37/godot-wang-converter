@@ -1,7 +1,6 @@
 # Wang Tile Set Creator
 
 A simple Conversion Tool for the 4 Base Tiles of a Wang/DualMap TileSet according to the [Godot Template](https://user-images.githubusercontent.com/47016402/87044518-ee28fa80-c1f6-11ea-86f5-de53e86fcbb6.png) and the filler tiles.
-You can download the compiled current version [here](https://github.com/kleingeist37/godot-wang-converter/releases/tag/rc-1)
 
 <img width="720" alt="overview" src="https://github.com/user-attachments/assets/9b5577ef-547d-43e1-aa4a-3ffe3e6ae180">
 
