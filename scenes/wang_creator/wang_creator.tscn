@@ -303,6 +303,7 @@ initial_position = 1
 size = Vector2i(600, 600)
 force_native = true
 access = 2
+filters = PackedStringArray("*.png", "*.webp", "*.jpg")
 use_native_dialog = true
 
 [node name="error_panel" parent="." instance=ExtResource("11_0mu7d")]
