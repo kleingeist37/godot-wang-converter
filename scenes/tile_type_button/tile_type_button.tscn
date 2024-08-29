@@ -8,4 +8,19 @@ ignore_texture_size = true
 stretch_mode = 4
 script = ExtResource("1_ewkk8")
 
+[node name="btn_remove" type="Button" parent="."]
+layout_mode = 1
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -34.0
+offset_right = -7.0
+offset_bottom = 42.0
+grow_horizontal = 0
+theme_override_colors/font_color = Color(1, 0, 0, 1)
+theme_override_font_sizes/font_size = 24
+text = "x"
+flat = true
+
 [connection signal="pressed" from="." to="." method="_on_pressed"]
+[connection signal="pressed" from="btn_remove" to="." method="_on_btn_remove_pressed"]

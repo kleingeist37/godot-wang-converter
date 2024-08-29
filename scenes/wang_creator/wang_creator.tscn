@@ -1,7 +1,8 @@
-[gd_scene load_steps=11 format=3 uid="uid://dwfe11p01aelk"]
+[gd_scene load_steps=12 format=3 uid="uid://dwfe11p01aelk"]
 
 [ext_resource type="Theme" uid="uid://dq8swrgnskgqc" path="res://theme/ui_default_theme.tres" id="1_6f5oy"]
 [ext_resource type="Script" path="res://scenes/wang_creator/wang_creator.gd" id="2_yfe83"]
+[ext_resource type="Script" path="res://scenes/wang_creator/ui_controller.gd" id="3_6yelo"]
 [ext_resource type="Script" path="res://scenes/wang_creator/hbox_button_handler.gd" id="3_g0mty"]
 [ext_resource type="PackedScene" uid="uid://ct3wf6xd60idd" path="res://scenes/tile_type_button/tile_type_button.tscn" id="3_k5oar"]
 [ext_resource type="Texture2D" uid="uid://dkahxhgpvip48" path="res://sprites/icon_outer_corner.png" id="4_2ese2"]
@@ -20,6 +21,13 @@ grow_horizontal = 2
 grow_vertical = 2
 theme = ExtResource("1_6f5oy")
 script = ExtResource("2_yfe83")
+
+[node name="ui_controller" type="Control" parent="."]
+unique_name_in_owner = true
+anchors_preset = 0
+offset_right = 40.0
+offset_bottom = 40.0
+script = ExtResource("3_6yelo")
 
 [node name="Panel" type="Panel" parent="."]
 layout_mode = 1
@@ -166,6 +174,9 @@ layout_mode = 2
 text = "Underlay Fill"
 horizontal_alignment = 1
 
+[node name="spacing_container" type="MarginContainer" parent="Panel/MarginContainer/VBoxContainer/hbox_main/vbox_content/step_1"]
+layout_mode = 2
+
 [node name="lbl_info" type="Label" parent="Panel/MarginContainer/VBoxContainer/hbox_main/vbox_content/step_1"]
 layout_mode = 2
 text = "The border tiles must be white in the areas where the overlay fill texture is to be applied. For underlay transparent."
@@ -300,6 +311,10 @@ value = 0.1
 [node name="HSeparator" type="HSeparator" parent="Panel/MarginContainer/VBoxContainer/hbox_main/vbox_content/step_2/HBoxContainer/VBoxContainer"]
 layout_mode = 2
 
+[node name="btn_recreate_texture" type="Button" parent="Panel/MarginContainer/VBoxContainer/hbox_main/vbox_content/step_2/HBoxContainer/VBoxContainer"]
+layout_mode = 2
+text = "Recreate Texture"
+
 [node name="lbl_tile_size" type="Label" parent="Panel/MarginContainer/VBoxContainer/hbox_main/vbox_content/step_2/HBoxContainer/VBoxContainer"]
 unique_name_in_owner = true
 layout_mode = 2
@@ -318,19 +333,19 @@ text = "3. Export the Texture"
 [node name="HSeparator3" type="HSeparator" parent="Panel/MarginContainer/VBoxContainer"]
 layout_mode = 2
 
-[node name="hbox_button_handler" type="HBoxContainer" parent="Panel/MarginContainer/VBoxContainer"]
+[node name="hbox_button_bar" type="HBoxContainer" parent="Panel/MarginContainer/VBoxContainer"]
 custom_minimum_size = Vector2(0, 50)
 layout_mode = 2
 script = ExtResource("3_g0mty")
 
-[node name="btn_new" type="Button" parent="Panel/MarginContainer/VBoxContainer/hbox_button_handler"]
+[node name="btn_new" type="Button" parent="Panel/MarginContainer/VBoxContainer/hbox_button_bar"]
 custom_minimum_size = Vector2(150, 0)
 layout_mode = 2
 size_flags_horizontal = 10
 mouse_default_cursor_shape = 2
 text = "New"
 
-[node name="btn_close" type="Button" parent="Panel/MarginContainer/VBoxContainer/hbox_button_handler"]
+[node name="btn_close" type="Button" parent="Panel/MarginContainer/VBoxContainer/hbox_button_bar"]
 custom_minimum_size = Vector2(150, 0)
 layout_mode = 2
 mouse_default_cursor_shape = 2
@@ -350,14 +365,16 @@ text = "X"
 flat = true
 
 [node name="file_dialog" type="FileDialog" parent="."]
+unique_name_in_owner = true
 initial_position = 1
 size = Vector2i(600, 600)
 force_native = true
 access = 2
 use_native_dialog = true
 
-[connection signal="pressed" from="Panel/MarginContainer/VBoxContainer/hbox_main/vbox_content/step_2/HBoxContainer/VBoxContainer/btn_export" to="Panel/MarginContainer/VBoxContainer/hbox_button_handler" method="_on_btn_export_pressed"]
-[connection signal="pressed" from="Panel/MarginContainer/VBoxContainer/hbox_button_handler/btn_new" to="Panel/MarginContainer/VBoxContainer/hbox_button_handler" method="_on_btn_new_pressed"]
-[connection signal="pressed" from="Panel/MarginContainer/VBoxContainer/hbox_button_handler/btn_close" to="Panel/MarginContainer/VBoxContainer/hbox_button_handler" method="_on_btn_close_pressed"]
-[connection signal="pressed" from="btn_close" to="Panel/MarginContainer/VBoxContainer/hbox_button_handler" method="_on_btn_close_pressed"]
-[connection signal="file_selected" from="file_dialog" to="." method="_on_file_dialog_file_selected"]
+[connection signal="pressed" from="Panel/MarginContainer/VBoxContainer/hbox_main/vbox_content/step_2/HBoxContainer/VBoxContainer/btn_recreate_texture" to="ui_controller" method="_on_btn_recreate_texture_pressed"]
+[connection signal="pressed" from="Panel/MarginContainer/VBoxContainer/hbox_main/vbox_content/step_2/HBoxContainer/VBoxContainer/btn_export" to="Panel/MarginContainer/VBoxContainer/hbox_button_bar" method="_on_btn_export_pressed"]
+[connection signal="pressed" from="Panel/MarginContainer/VBoxContainer/hbox_button_bar/btn_new" to="Panel/MarginContainer/VBoxContainer/hbox_button_bar" method="_on_btn_new_pressed"]
+[connection signal="pressed" from="Panel/MarginContainer/VBoxContainer/hbox_button_bar/btn_close" to="Panel/MarginContainer/VBoxContainer/hbox_button_bar" method="_on_btn_close_pressed"]
+[connection signal="pressed" from="btn_close" to="Panel/MarginContainer/VBoxContainer/hbox_button_bar" method="_on_btn_close_pressed"]
+[connection signal="file_selected" from="file_dialog" to="ui_controller" method="_on_file_dialog_file_selected"]
