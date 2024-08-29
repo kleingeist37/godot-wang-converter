@@ -130,8 +130,6 @@ func _generate_border_tiles(preview_image: Image) -> Image:
 		var texture = _get_texture(tile_type) as ImageTexture;
 		if texture == null:
 			continue;
-			
-		
 		
 		for tile_pos: Vector2i in placement_dict[tile_type].keys():
 			var rotator := texture.get_image();
@@ -196,7 +194,7 @@ func _generate_fill_texture(fill_mode: FillMode , target_image: Image, source_im
 func export_texture(path: String):
 	var image = generated_texture.get_image();
 	if !_has_valid_extension(path):
-		image.save_png(path);
+		image.save_png(path + ".png");
 		return;
 	
 	var split = path.split(".");
