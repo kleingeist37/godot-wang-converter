@@ -120,34 +120,34 @@ func create_preview_texture():
 	if texture_dict.has(TileType.OVERLAY_FILL) \
 	&& texture_dict[TileType.OVERLAY_FILL] != null:
 		preview_image = _generate_fill_texture(FillMode.OVERLAY, preview_image, texture_dict[TileType.OVERLAY_FILL].get_image());
-	var preview_texture = ImageTexture.create_from_image(preview_image);
+	var preview_texture := ImageTexture.create_from_image(preview_image);
 
 	ui_controller.texture_preview.texture = preview_texture;
 	generated_texture = preview_texture;
 
 func _generate_border_tiles(preview_image: Image) -> Image:
 	for tile_type: TileType in texture_dict.keys():
-		var texture = _get_texture(tile_type) as ImageTexture;
+		var texture := _get_texture(tile_type) as ImageTexture;
 		if texture == null:
 			continue;
 		
 		for tile_pos: Vector2i in placement_dict[tile_type].keys():
-			var rotator := texture.get_image();
+			var rotated_image := texture.get_image();
 			var rotations := placement_dict[tile_type][tile_pos] as int;
 
-			#it doesn't fucking work with looping.
+			#it doesn't work with looping.
 			match(rotations):
 				0:
 					pass;
 				1:
-					rotator.rotate_90(CLOCKWISE);
+					rotated_image.rotate_90(CLOCKWISE);
 
 				2: 
-					rotator.rotate_90(CLOCKWISE);
-					rotator.rotate_90(CLOCKWISE);
+					rotated_image.rotate_90(CLOCKWISE);
+					rotated_image.rotate_90(CLOCKWISE);
 
 				3:
-					rotator.rotate_90(COUNTERCLOCKWISE);
+					rotated_image.rotate_90(COUNTERCLOCKWISE);
 				
 			var start_pos_x := tile_pos.x * tile_size;
 			var max_range_x := start_pos_x + tile_size;
@@ -156,7 +156,7 @@ func _generate_border_tiles(preview_image: Image) -> Image:
 			var max_range_y := start_pos_y + tile_size;
 			for x  in range(start_pos_x, max_range_x ):
 				for y in range(start_pos_y, max_range_y):
-					var source_pixel = rotator.get_pixel(x % tile_size, y % tile_size);
+					var source_pixel = rotated_image.get_pixel(x % tile_size, y % tile_size);
 					if source_pixel.a != 0:
 						var base_pixel := preview_image.get_pixel(x, y);
 						var mixed_pixel := _mix_colors(base_pixel, source_pixel);
@@ -168,15 +168,13 @@ func _generate_border_tiles(preview_image: Image) -> Image:
 
 
 func _generate_fill_texture(fill_mode: FillMode , target_image: Image, source_image: Image, factor: int = 4) -> Image:
+	var max_size := tile_size * factor;
 	
-	var target_width = tile_size * factor
-	var target_height = tile_size * factor
-	
-	for y in target_height:
-		for x in target_width:
+	for y in max_size:
+		for x in max_size:
 			var pos_x := x % tile_size as int;
 			var pos_y := y % tile_size as int;
-			var target_color = target_image.get_pixel(x, y);
+			var target_color := target_image.get_pixel(x, y);
 			var source_pixel := source_image.get_pixel(pos_x, pos_y);
 			
 			match fill_mode:
@@ -192,13 +190,13 @@ func _generate_fill_texture(fill_mode: FillMode , target_image: Image, source_im
 
 
 func export_texture(path: String):
-	var image = generated_texture.get_image();
+	var image := generated_texture.get_image();
 	if !_has_valid_extension(path):
 		image.save_png(path + ".png");
 		return;
 	
-	var split = path.split(".");
-	var ending = split[split.size() - 1];
+	var split := path.split(".");
+	var ending := split[split.size() - 1];
 	match ending:
 		"webp":
 			image.save_webp(path, false, 1);
@@ -218,10 +216,10 @@ func _get_texture(tile_type: TileType):
 
 
 func _mix_colors(base_color: Color, overlay_color: Color) -> Color:
-	var alpha_overlay = overlay_color.a;
-	var alpha_base = base_color.a * (1.0 - alpha_overlay);
-	var final_alpha = alpha_overlay + alpha_base;
-	var final_color = overlay_color * alpha_overlay + base_color * alpha_base;
+	var alpha_overlay := overlay_color.a;
+	var alpha_base := base_color.a * (1.0 - alpha_overlay);
+	var final_alpha := alpha_overlay + alpha_base;
+	var final_color := overlay_color * alpha_overlay + base_color * alpha_base;
 	
 	if final_alpha > 0:
 		final_color /= final_alpha;
@@ -235,7 +233,7 @@ func _is_near_white(color: Color, tolerance: float) -> bool:
 
 func _check_textures():
 	for key: TileType in texture_dict.keys():
-		var current_texture = texture_dict[key];
+		var current_texture := texture_dict[key] as ImageTexture;
 		if current_texture != null:
 			tile_size = current_texture.get_width();
 			current_texture_type = key;
@@ -244,8 +242,8 @@ func _check_textures():
 
 
 func _has_valid_extension(file_name: String) -> bool:
-	var regex = RegEx.new();
-	var error = regex.compile(regex_pattern);
+	var regex := RegEx.new();
+	var error := regex.compile(regex_pattern);
 	if error != OK:
 		return false;
 		
