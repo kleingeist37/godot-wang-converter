@@ -128,8 +128,24 @@ func _import_texture(path):
 
 func _create_preview_texture():
 	var original := _get_current_texture() as ImageTexture;
+	var width := original.get_width();
+	var height := original.get_height();
+	var preview_image := Image.create(width * 4, height * 4, false, Image.FORMAT_RGBA8);
+	if texture_dict.has(TileType.UNDERLAY_FILL) \
+	&& texture_dict[TileType.UNDERLAY_FILL] != null:
+		preview_image = generate_fill_texture(FillMode.UNDERLAY, preview_image, texture_dict[TileType.UNDERLAY_FILL].get_image(), width, height, 4);
 
-	var preview_image := Image.create(original.get_width() * 4, original.get_height() * 4, false, Image.FORMAT_RGBA8);
+	preview_image = generate_border_tiles(preview_image);
+	
+	if texture_dict.has(TileType.OVERLAY_FILL) \
+	&& texture_dict[TileType.OVERLAY_FILL] != null:
+		preview_image = generate_fill_texture(FillMode.OVERLAY, preview_image, texture_dict[TileType.OVERLAY_FILL].get_image(), width, height, 4);
+	var preview_texture = ImageTexture.create_from_image(preview_image);
+
+	texture_preview.texture = preview_texture;
+	generated_texture = preview_texture;
+
+func generate_border_tiles(preview_image: Image) -> Image:
 	for tile_type: TileType in texture_dict.keys():
 		var texture = _get_texture(tile_type) as ImageTexture;
 		if texture == null:
@@ -152,13 +168,76 @@ func _create_preview_texture():
 
 				3:
 					rotator.rotate_90(COUNTERCLOCKWISE);
+				
+			var start_pos_x := tile_pos.x * rotator.get_width();
+			var max_range_x := start_pos_x + rotator.get_width();
+			
+			var start_pos_y := tile_pos.y * rotator.get_height();
+			var max_range_y := start_pos_y + rotator.get_height();
+			for x  in range(start_pos_x, max_range_x ):
+				for y in range(start_pos_y, max_range_y):
+					var source_pixel = rotator.get_pixel(x % rotator.get_width(), y % rotator.get_height());
+					if source_pixel.a != 0:
+						preview_image.set_pixel(x,y, source_pixel);
 
-			preview_image.blit_rect(rotator, Rect2i(0,0, original.get_width(), original.get_height()), tile_pos * original.get_width())
+			
+	return preview_image;
 
-	var preview_texture = ImageTexture.create_from_image(preview_image);
 
-	texture_preview.texture = preview_texture;
-	generated_texture = preview_texture;
+enum FillMode { UNDERLAY, OVERLAY};
+func generate_fill_texture(fill_mode: FillMode , target_image: Image, source_image: Image, tile_width: int, tile_height: int, factor: int = 4) -> Image:
+	
+	var counter = 0;
+	var target_width = tile_width * factor
+	var target_height = tile_height * factor
+			
+	
+	for y in target_height:
+		for x in target_width:
+			var pos_x := x % tile_width as int;
+			var pos_y := y % tile_height as int;
+			var target_color = target_image.get_pixel(x, y);
+			var source_pixel := source_image.get_pixel(pos_x, pos_y);
+			
+			match fill_mode:
+				FillMode.UNDERLAY:
+					target_image.set_pixel(x, y, source_pixel);
+				
+				FillMode.OVERLAY:
+					if target_color == Color(1, 1, 1, 1):
+						target_image.set_pixel(x, y, source_pixel);
+
+		counter += 1;
+	return target_image;
+		
+
+#func generate_border_tiles(preview_image: Image, width: int, height: int) -> Image:
+	#for tile_type: TileType in texture_dict.keys():
+		#var texture = _get_texture(tile_type) as ImageTexture;
+		#if texture == null:
+			#continue;
+		#
+		#for tile_pos: Vector2i in placement_dict[tile_type].keys():
+			#var rotator := texture.get_image();
+			#var rotations := placement_dict[tile_type][tile_pos] as int;
+#
+			##it doesn't fucking work with looping.
+			#match(rotations):
+				#0:
+					#pass;
+				#1:
+					#rotator.rotate_90(CLOCKWISE);
+#
+				#2: 
+					#rotator.rotate_90(CLOCKWISE);
+					#rotator.rotate_90(CLOCKWISE);
+#
+				#3:
+					#rotator.rotate_90(COUNTERCLOCKWISE);
+#
+			#preview_image.blit_rect(rotator, Rect2i(0,0, width, height), tile_pos * width)
+		#
+	#return preview_image;
 	
 
 func _export_texture(path: String):
