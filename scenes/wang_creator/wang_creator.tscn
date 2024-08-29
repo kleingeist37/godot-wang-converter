@@ -205,7 +205,6 @@ size_flags_vertical = 3
 unique_name_in_owner = true
 layout_mode = 2
 size_flags_vertical = 3
-texture = ExtResource("7_kgrkw")
 expand_mode = 2
 stretch_mode = 3
 
