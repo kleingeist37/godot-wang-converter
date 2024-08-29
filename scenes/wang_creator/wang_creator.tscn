@@ -1,4 +1,4 @@
-[gd_scene load_steps=12 format=3 uid="uid://dwfe11p01aelk"]
+[gd_scene load_steps=11 format=3 uid="uid://dwfe11p01aelk"]
 
 [ext_resource type="Theme" uid="uid://dq8swrgnskgqc" path="res://theme/ui_default_theme.tres" id="1_6f5oy"]
 [ext_resource type="Script" path="res://scenes/wang_creator/wang_creator.gd" id="2_yfe83"]
@@ -10,7 +10,6 @@
 [ext_resource type="Texture2D" uid="uid://detdm22wmvidf" path="res://sprites/icon_inner_corner.png" id="6_qt0rl"]
 [ext_resource type="Texture2D" uid="uid://dcn4qmqmcfyit" path="res://sprites/icon_border.png" id="7_kgrkw"]
 [ext_resource type="Texture2D" uid="uid://4p4ojmpbq1ww" path="res://sprites/icon_fill.png" id="8_s02kh"]
-[ext_resource type="PackedScene" uid="uid://64be4c5kn1h3" path="res://scenes/texture_coord_button/texture_coord_btn.tscn" id="9_peiv5"]
 
 [node name="wang_creator" type="Control"]
 layout_mode = 3
@@ -193,81 +192,16 @@ size_flags_vertical = 3
 layout_mode = 2
 size_flags_vertical = 3
 
-[node name="GridContainer" type="GridContainer" parent="Panel/MarginContainer/VBoxContainer/hbox_main/vbox_content/step_2/HBoxContainer"]
-visible = false
-custom_minimum_size = Vector2(512, 0)
-layout_mode = 2
-size_flags_horizontal = 3
-columns = 4
-
-[node name="btn_0_0" parent="Panel/MarginContainer/VBoxContainer/hbox_main/vbox_content/step_2/HBoxContainer/GridContainer" instance=ExtResource("9_peiv5")]
-layout_mode = 2
-
-[node name="btn_0_1" type="TextureButton" parent="Panel/MarginContainer/VBoxContainer/hbox_main/vbox_content/step_2/HBoxContainer/GridContainer"]
-custom_minimum_size = Vector2(128, 128)
-layout_mode = 2
-
-[node name="btn_0_2" type="TextureButton" parent="Panel/MarginContainer/VBoxContainer/hbox_main/vbox_content/step_2/HBoxContainer/GridContainer"]
-custom_minimum_size = Vector2(128, 128)
-layout_mode = 2
-
-[node name="TextureButton4" type="TextureButton" parent="Panel/MarginContainer/VBoxContainer/hbox_main/vbox_content/step_2/HBoxContainer/GridContainer"]
-custom_minimum_size = Vector2(128, 128)
-layout_mode = 2
-
-[node name="TextureButton5" type="TextureButton" parent="Panel/MarginContainer/VBoxContainer/hbox_main/vbox_content/step_2/HBoxContainer/GridContainer"]
-custom_minimum_size = Vector2(128, 128)
-layout_mode = 2
-
-[node name="TextureButton6" type="TextureButton" parent="Panel/MarginContainer/VBoxContainer/hbox_main/vbox_content/step_2/HBoxContainer/GridContainer"]
-custom_minimum_size = Vector2(128, 128)
-layout_mode = 2
-
-[node name="TextureButton7" type="TextureButton" parent="Panel/MarginContainer/VBoxContainer/hbox_main/vbox_content/step_2/HBoxContainer/GridContainer"]
-custom_minimum_size = Vector2(128, 128)
-layout_mode = 2
-
-[node name="TextureButton8" type="TextureButton" parent="Panel/MarginContainer/VBoxContainer/hbox_main/vbox_content/step_2/HBoxContainer/GridContainer"]
-custom_minimum_size = Vector2(128, 128)
-layout_mode = 2
-
-[node name="TextureButton9" type="TextureButton" parent="Panel/MarginContainer/VBoxContainer/hbox_main/vbox_content/step_2/HBoxContainer/GridContainer"]
-custom_minimum_size = Vector2(128, 128)
-layout_mode = 2
-
-[node name="TextureButton10" type="TextureButton" parent="Panel/MarginContainer/VBoxContainer/hbox_main/vbox_content/step_2/HBoxContainer/GridContainer"]
-custom_minimum_size = Vector2(128, 128)
-layout_mode = 2
-
-[node name="TextureButton11" type="TextureButton" parent="Panel/MarginContainer/VBoxContainer/hbox_main/vbox_content/step_2/HBoxContainer/GridContainer"]
-custom_minimum_size = Vector2(128, 128)
-layout_mode = 2
-
-[node name="TextureButton12" type="TextureButton" parent="Panel/MarginContainer/VBoxContainer/hbox_main/vbox_content/step_2/HBoxContainer/GridContainer"]
-custom_minimum_size = Vector2(128, 128)
-layout_mode = 2
-
-[node name="TextureButton13" type="TextureButton" parent="Panel/MarginContainer/VBoxContainer/hbox_main/vbox_content/step_2/HBoxContainer/GridContainer"]
-custom_minimum_size = Vector2(128, 128)
-layout_mode = 2
-
-[node name="TextureButton14" type="TextureButton" parent="Panel/MarginContainer/VBoxContainer/hbox_main/vbox_content/step_2/HBoxContainer/GridContainer"]
-custom_minimum_size = Vector2(128, 128)
-layout_mode = 2
-
-[node name="TextureButton15" type="TextureButton" parent="Panel/MarginContainer/VBoxContainer/hbox_main/vbox_content/step_2/HBoxContainer/GridContainer"]
-custom_minimum_size = Vector2(128, 128)
-layout_mode = 2
-
-[node name="TextureButton16" type="TextureButton" parent="Panel/MarginContainer/VBoxContainer/hbox_main/vbox_content/step_2/HBoxContainer/GridContainer"]
-custom_minimum_size = Vector2(128, 128)
-layout_mode = 2
-
-[node name="VBoxContainer2" type="VBoxContainer" parent="Panel/MarginContainer/VBoxContainer/hbox_main/vbox_content/step_2/HBoxContainer"]
+[node name="ScrollContainer" type="ScrollContainer" parent="Panel/MarginContainer/VBoxContainer/hbox_main/vbox_content/step_2/HBoxContainer"]
 layout_mode = 2
 size_flags_horizontal = 3
 
-[node name="texture_preview" type="TextureRect" parent="Panel/MarginContainer/VBoxContainer/hbox_main/vbox_content/step_2/HBoxContainer/VBoxContainer2"]
+[node name="VBoxContainer2" type="VBoxContainer" parent="Panel/MarginContainer/VBoxContainer/hbox_main/vbox_content/step_2/HBoxContainer/ScrollContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+
+[node name="texture_preview" type="TextureRect" parent="Panel/MarginContainer/VBoxContainer/hbox_main/vbox_content/step_2/HBoxContainer/ScrollContainer/VBoxContainer2"]
 unique_name_in_owner = true
 layout_mode = 2
 size_flags_vertical = 3
