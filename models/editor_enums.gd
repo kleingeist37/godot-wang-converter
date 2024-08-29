@@ -14,3 +14,9 @@ enum FillMode {
 	UNDERLAY, 
 	OVERLAY
 };
+
+
+enum ErrorType {
+	SIZE_NOT_EQUAL,
+	DIFFER_SIZES_AMONG_FILES
+}

@@ -102,7 +102,6 @@ unique_name_in_owner = true
 layout_mode = 2
 mouse_default_cursor_shape = 2
 texture_normal = ExtResource("5_qr07o")
-stretch_mode = 3
 tile_type = 3
 
 [node name="Label" type="Label" parent="Panel/MarginContainer/VBoxContainer/hbox_main/vbox_content/step_1/HBoxContainer/btn_edge_connector"]
@@ -118,7 +117,6 @@ unique_name_in_owner = true
 layout_mode = 2
 mouse_default_cursor_shape = 2
 texture_normal = ExtResource("6_qt0rl")
-stretch_mode = 3
 tile_type = 1
 
 [node name="Label" type="Label" parent="Panel/MarginContainer/VBoxContainer/hbox_main/vbox_content/step_1/HBoxContainer/btn_inner_corner"]
@@ -134,7 +132,6 @@ unique_name_in_owner = true
 layout_mode = 2
 mouse_default_cursor_shape = 2
 texture_normal = ExtResource("7_kgrkw")
-stretch_mode = 3
 
 [node name="Label" type="Label" parent="Panel/MarginContainer/VBoxContainer/hbox_main/vbox_content/step_1/HBoxContainer/btn_border"]
 layout_mode = 2
@@ -205,7 +202,6 @@ unique_name_in_owner = true
 layout_mode = 2
 size_flags_horizontal = 4
 size_flags_vertical = 3
-expand_mode = 5
 stretch_mode = 3
 
 [node name="VSeparator" type="VSeparator" parent="Panel/MarginContainer/VBoxContainer/hbox_main/vbox_content/step_2/HBoxContainer"]

@@ -2,6 +2,7 @@ class_name WangConverter extends Control
 
 const TileType = EditorEnums.TileType;
 const FillMode = EditorEnums.FillMode;
+const ErrorType = EditorEnums.ErrorType;
 @onready var ui_controller: UIController = %ui_controller
 @onready var error_panel: ErrorPanel = %error_panel
 
@@ -76,6 +77,11 @@ func import_texture(path):
 func create_preview_texture():
 	var original := _get_current_texture() as ImageTexture;
 	
+	if original.get_width() != original.get_height():
+		error_panel.set_message(ErrorType.SIZE_NOT_EQUAL);
+		error_panel.show();
+		return;
+	
 	if tile_width == 0:
 		tile_width = original.get_width();
 	
@@ -83,10 +89,12 @@ func create_preview_texture():
 		tile_height = original.get_height();
 		
 	if tile_width != 0 and original.get_width() != tile_width:
+		error_panel.set_message(ErrorType.DIFFER_SIZES_AMONG_FILES);
 		error_panel.show();
 		return;
 		
-	if tile_height != 0 and original.get_height() != tile_width:
+	if tile_height != 0 and original.get_height() != tile_height:
+		error_panel.set_message(ErrorType.DIFFER_SIZES_AMONG_FILES);
 		error_panel.show();
 		return;
 	
