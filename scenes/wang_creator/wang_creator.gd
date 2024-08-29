@@ -235,8 +235,8 @@ func _is_near_white(color: Color, tolerance: float) -> bool:
 
 func _check_textures():
 	for key: TileType in texture_dict.keys():
-		var current_texture := texture_dict[key] as ImageTexture;
-		if current_texture != null:
+		var curr_texture := texture_dict[key] as ImageTexture;
+		if curr_texture != null:
 			tile_size = current_texture.get_width();
 			current_texture_type = key;
 			create_preview_texture();
