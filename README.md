@@ -38,6 +38,6 @@ Here are some example:
 
 <img width="721" alt="example_4" src="https://github.com/user-attachments/assets/af6cb2fa-dffa-4ed4-b8cd-80344da9dea2">
 
-*TileSet with outer shadow*
+*TileSet with outer shadow but not white border areas*
 
 <img width="721" alt="grass_shadow" src="https://github.com/user-attachments/assets/8ece160f-0237-4c53-948e-b6ed1e986bcc">
