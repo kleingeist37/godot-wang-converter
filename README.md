@@ -1,6 +1,6 @@
 # Wang Tile Set Creator
 
-A simple Conversion Tool for the 4 Base Tiles of a Wang/DualMap TileSet and the filler tiles.
+A simple Conversion Tool for the 4 Base Tiles of a Wang/DualMap TileSet according to the [Godot Template](https://user-images.githubusercontent.com/47016402/87044518-ee28fa80-c1f6-11ea-86f5-de53e86fcbb6.png) and the filler tiles.
 
 <img width="720" alt="overview" src="https://github.com/user-attachments/assets/9b5577ef-547d-43e1-aa4a-3ffe3e6ae180">
 
@@ -20,7 +20,7 @@ If your tile set has no underlay fill tile, ignore the underlay fill button and 
 
 
 
-Here are some example:
+# Examples
 
 *Step by Step Creation*
 
