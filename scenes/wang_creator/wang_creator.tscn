@@ -61,187 +61,175 @@ grow_vertical = 2
 [node name="VBoxContainer" type="VBoxContainer" parent="Panel/MarginContainer"]
 layout_mode = 2
 
-[node name="hbox_main" type="HBoxContainer" parent="Panel/MarginContainer/VBoxContainer"]
-layout_mode = 2
-size_flags_vertical = 3
-
-[node name="vbox_content" type="VBoxContainer" parent="Panel/MarginContainer/VBoxContainer/hbox_main"]
-layout_mode = 2
-size_flags_horizontal = 3
-
-[node name="step_1" type="VBoxContainer" parent="Panel/MarginContainer/VBoxContainer/hbox_main/vbox_content"]
+[node name="step_1" type="VBoxContainer" parent="Panel/MarginContainer/VBoxContainer"]
 layout_mode = 2
 
-[node name="lbl_title" type="Label" parent="Panel/MarginContainer/VBoxContainer/hbox_main/vbox_content/step_1"]
+[node name="lbl_title" type="Label" parent="Panel/MarginContainer/VBoxContainer/step_1"]
 layout_mode = 2
 theme_override_font_sizes/font_size = 32
 text = "Wang TileSet Creator"
 horizontal_alignment = 1
 
-[node name="HSeparator" type="HSeparator" parent="Panel/MarginContainer/VBoxContainer/hbox_main/vbox_content/step_1"]
+[node name="HSeparator" type="HSeparator" parent="Panel/MarginContainer/VBoxContainer/step_1"]
 layout_mode = 2
 
-[node name="lbl_step_1" type="Label" parent="Panel/MarginContainer/VBoxContainer/hbox_main/vbox_content/step_1"]
+[node name="lbl_step_1" type="Label" parent="Panel/MarginContainer/VBoxContainer/step_1"]
 layout_mode = 2
 theme_override_font_sizes/font_size = 24
 text = "1. Import your Tiles"
 horizontal_alignment = 1
 
-[node name="HBoxContainer" type="HBoxContainer" parent="Panel/MarginContainer/VBoxContainer/hbox_main/vbox_content/step_1"]
+[node name="HBoxContainer" type="HBoxContainer" parent="Panel/MarginContainer/VBoxContainer/step_1"]
 layout_mode = 2
 alignment = 1
 
-[node name="btn_outer_corner" type="VBoxContainer" parent="Panel/MarginContainer/VBoxContainer/hbox_main/vbox_content/step_1/HBoxContainer"]
+[node name="btn_outer_corner" type="VBoxContainer" parent="Panel/MarginContainer/VBoxContainer/step_1/HBoxContainer"]
 layout_mode = 2
 
-[node name="tile_type_button_outer_corner" parent="Panel/MarginContainer/VBoxContainer/hbox_main/vbox_content/step_1/HBoxContainer/btn_outer_corner" instance=ExtResource("3_k5oar")]
+[node name="tile_type_button_outer_corner" parent="Panel/MarginContainer/VBoxContainer/step_1/HBoxContainer/btn_outer_corner" instance=ExtResource("3_k5oar")]
 unique_name_in_owner = true
 layout_mode = 2
 mouse_default_cursor_shape = 2
 texture_normal = ExtResource("4_2ese2")
 tile_type = 2
 
-[node name="Label" type="Label" parent="Panel/MarginContainer/VBoxContainer/hbox_main/vbox_content/step_1/HBoxContainer/btn_outer_corner"]
+[node name="Label" type="Label" parent="Panel/MarginContainer/VBoxContainer/step_1/HBoxContainer/btn_outer_corner"]
 layout_mode = 2
 text = "Outer Corner"
 horizontal_alignment = 1
 
-[node name="btn_edge_connector" type="VBoxContainer" parent="Panel/MarginContainer/VBoxContainer/hbox_main/vbox_content/step_1/HBoxContainer"]
+[node name="btn_edge_connector" type="VBoxContainer" parent="Panel/MarginContainer/VBoxContainer/step_1/HBoxContainer"]
 layout_mode = 2
 
-[node name="tile_type_button_edge_connector" parent="Panel/MarginContainer/VBoxContainer/hbox_main/vbox_content/step_1/HBoxContainer/btn_edge_connector" instance=ExtResource("3_k5oar")]
+[node name="tile_type_button_edge_connector" parent="Panel/MarginContainer/VBoxContainer/step_1/HBoxContainer/btn_edge_connector" instance=ExtResource("3_k5oar")]
 unique_name_in_owner = true
 layout_mode = 2
 mouse_default_cursor_shape = 2
 texture_normal = ExtResource("5_qr07o")
 tile_type = 3
 
-[node name="Label" type="Label" parent="Panel/MarginContainer/VBoxContainer/hbox_main/vbox_content/step_1/HBoxContainer/btn_edge_connector"]
+[node name="Label" type="Label" parent="Panel/MarginContainer/VBoxContainer/step_1/HBoxContainer/btn_edge_connector"]
 layout_mode = 2
 text = "Edge Connector"
 horizontal_alignment = 1
 
-[node name="btn_inner_corner" type="VBoxContainer" parent="Panel/MarginContainer/VBoxContainer/hbox_main/vbox_content/step_1/HBoxContainer"]
+[node name="btn_inner_corner" type="VBoxContainer" parent="Panel/MarginContainer/VBoxContainer/step_1/HBoxContainer"]
 layout_mode = 2
 
-[node name="tile_type_button_inner_corner" parent="Panel/MarginContainer/VBoxContainer/hbox_main/vbox_content/step_1/HBoxContainer/btn_inner_corner" instance=ExtResource("3_k5oar")]
+[node name="tile_type_button_inner_corner" parent="Panel/MarginContainer/VBoxContainer/step_1/HBoxContainer/btn_inner_corner" instance=ExtResource("3_k5oar")]
 unique_name_in_owner = true
 layout_mode = 2
 mouse_default_cursor_shape = 2
 texture_normal = ExtResource("6_qt0rl")
 tile_type = 1
 
-[node name="Label" type="Label" parent="Panel/MarginContainer/VBoxContainer/hbox_main/vbox_content/step_1/HBoxContainer/btn_inner_corner"]
+[node name="Label" type="Label" parent="Panel/MarginContainer/VBoxContainer/step_1/HBoxContainer/btn_inner_corner"]
 layout_mode = 2
 text = "Inner Corner"
 horizontal_alignment = 1
 
-[node name="btn_border" type="VBoxContainer" parent="Panel/MarginContainer/VBoxContainer/hbox_main/vbox_content/step_1/HBoxContainer"]
+[node name="btn_border" type="VBoxContainer" parent="Panel/MarginContainer/VBoxContainer/step_1/HBoxContainer"]
 layout_mode = 2
 
-[node name="tile_type_button_border" parent="Panel/MarginContainer/VBoxContainer/hbox_main/vbox_content/step_1/HBoxContainer/btn_border" instance=ExtResource("3_k5oar")]
+[node name="tile_type_button_border" parent="Panel/MarginContainer/VBoxContainer/step_1/HBoxContainer/btn_border" instance=ExtResource("3_k5oar")]
 unique_name_in_owner = true
 layout_mode = 2
 mouse_default_cursor_shape = 2
 texture_normal = ExtResource("7_kgrkw")
 
-[node name="Label" type="Label" parent="Panel/MarginContainer/VBoxContainer/hbox_main/vbox_content/step_1/HBoxContainer/btn_border"]
+[node name="Label" type="Label" parent="Panel/MarginContainer/VBoxContainer/step_1/HBoxContainer/btn_border"]
 layout_mode = 2
 text = "Border"
 horizontal_alignment = 1
 
-[node name="btn_overlay_fill" type="VBoxContainer" parent="Panel/MarginContainer/VBoxContainer/hbox_main/vbox_content/step_1/HBoxContainer"]
+[node name="btn_overlay_fill" type="VBoxContainer" parent="Panel/MarginContainer/VBoxContainer/step_1/HBoxContainer"]
 layout_mode = 2
 
-[node name="tile_type_button_overlay_fill" parent="Panel/MarginContainer/VBoxContainer/hbox_main/vbox_content/step_1/HBoxContainer/btn_overlay_fill" instance=ExtResource("3_k5oar")]
+[node name="tile_type_button_overlay_fill" parent="Panel/MarginContainer/VBoxContainer/step_1/HBoxContainer/btn_overlay_fill" instance=ExtResource("3_k5oar")]
 unique_name_in_owner = true
 layout_mode = 2
 mouse_default_cursor_shape = 2
 texture_normal = ExtResource("8_s02kh")
 tile_type = 4
 
-[node name="Label" type="Label" parent="Panel/MarginContainer/VBoxContainer/hbox_main/vbox_content/step_1/HBoxContainer/btn_overlay_fill"]
+[node name="Label" type="Label" parent="Panel/MarginContainer/VBoxContainer/step_1/HBoxContainer/btn_overlay_fill"]
 layout_mode = 2
 text = "Overlay Fill"
 horizontal_alignment = 1
 
-[node name="btn_underlay_fill" type="VBoxContainer" parent="Panel/MarginContainer/VBoxContainer/hbox_main/vbox_content/step_1/HBoxContainer"]
+[node name="btn_underlay_fill" type="VBoxContainer" parent="Panel/MarginContainer/VBoxContainer/step_1/HBoxContainer"]
 layout_mode = 2
 
-[node name="tile_type_button_underlay_fill" parent="Panel/MarginContainer/VBoxContainer/hbox_main/vbox_content/step_1/HBoxContainer/btn_underlay_fill" instance=ExtResource("3_k5oar")]
+[node name="tile_type_button_underlay_fill" parent="Panel/MarginContainer/VBoxContainer/step_1/HBoxContainer/btn_underlay_fill" instance=ExtResource("3_k5oar")]
 unique_name_in_owner = true
 layout_mode = 2
 mouse_default_cursor_shape = 2
 texture_normal = ExtResource("10_m5i2y")
 tile_type = 5
 
-[node name="Label" type="Label" parent="Panel/MarginContainer/VBoxContainer/hbox_main/vbox_content/step_1/HBoxContainer/btn_underlay_fill"]
+[node name="Label" type="Label" parent="Panel/MarginContainer/VBoxContainer/step_1/HBoxContainer/btn_underlay_fill"]
 layout_mode = 2
 text = "Underlay Fill"
 horizontal_alignment = 1
 
-[node name="spacing_container" type="MarginContainer" parent="Panel/MarginContainer/VBoxContainer/hbox_main/vbox_content/step_1"]
+[node name="spacing_container" type="MarginContainer" parent="Panel/MarginContainer/VBoxContainer/step_1"]
 layout_mode = 2
 
-[node name="lbl_info" type="Label" parent="Panel/MarginContainer/VBoxContainer/hbox_main/vbox_content/step_1"]
+[node name="lbl_info" type="Label" parent="Panel/MarginContainer/VBoxContainer/step_1"]
 layout_mode = 2
 text = "The border tiles must be white in the areas where the overlay fill texture shall be applied.
 Tiles Sizes bigger than 256 x 256 work, but also need more computing time"
 horizontal_alignment = 1
 
-[node name="HSeparator2" type="HSeparator" parent="Panel/MarginContainer/VBoxContainer/hbox_main/vbox_content/step_1"]
+[node name="HSeparator2" type="HSeparator" parent="Panel/MarginContainer/VBoxContainer/step_1"]
 layout_mode = 2
 
-[node name="step_2" type="VBoxContainer" parent="Panel/MarginContainer/VBoxContainer/hbox_main/vbox_content"]
-layout_mode = 2
-size_flags_vertical = 3
-
-[node name="HBoxContainer" type="HBoxContainer" parent="Panel/MarginContainer/VBoxContainer/hbox_main/vbox_content/step_2"]
+[node name="step_2" type="HBoxContainer" parent="Panel/MarginContainer/VBoxContainer"]
 layout_mode = 2
 size_flags_vertical = 3
 
-[node name="ScrollContainer" type="ScrollContainer" parent="Panel/MarginContainer/VBoxContainer/hbox_main/vbox_content/step_2/HBoxContainer"]
+[node name="ScrollContainer" type="ScrollContainer" parent="Panel/MarginContainer/VBoxContainer/step_2"]
 layout_mode = 2
 size_flags_horizontal = 3
 
-[node name="VBoxContainer2" type="VBoxContainer" parent="Panel/MarginContainer/VBoxContainer/hbox_main/vbox_content/step_2/HBoxContainer/ScrollContainer"]
+[node name="VBoxContainer2" type="VBoxContainer" parent="Panel/MarginContainer/VBoxContainer/step_2/ScrollContainer"]
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
 
-[node name="texture_preview" type="TextureRect" parent="Panel/MarginContainer/VBoxContainer/hbox_main/vbox_content/step_2/HBoxContainer/ScrollContainer/VBoxContainer2"]
+[node name="texture_preview" type="TextureRect" parent="Panel/MarginContainer/VBoxContainer/step_2/ScrollContainer/VBoxContainer2"]
 unique_name_in_owner = true
 layout_mode = 2
 size_flags_horizontal = 4
 size_flags_vertical = 3
 stretch_mode = 2
 
-[node name="VSeparator" type="VSeparator" parent="Panel/MarginContainer/VBoxContainer/hbox_main/vbox_content/step_2/HBoxContainer"]
+[node name="VSeparator" type="VSeparator" parent="Panel/MarginContainer/VBoxContainer/step_2"]
 layout_mode = 2
 
-[node name="VBoxContainer" type="VBoxContainer" parent="Panel/MarginContainer/VBoxContainer/hbox_main/vbox_content/step_2/HBoxContainer"]
+[node name="VBoxContainer" type="VBoxContainer" parent="Panel/MarginContainer/VBoxContainer/step_2"]
 layout_mode = 2
 size_flags_horizontal = 3
 
-[node name="lbl_step_2" type="Label" parent="Panel/MarginContainer/VBoxContainer/hbox_main/vbox_content/step_2/HBoxContainer/VBoxContainer"]
+[node name="lbl_step_2" type="Label" parent="Panel/MarginContainer/VBoxContainer/step_2/VBoxContainer"]
 layout_mode = 2
 theme_override_font_sizes/font_size = 24
 text = "2. Data & Adjustment"
 horizontal_alignment = 1
 
-[node name="spinbox_tolerance_factor" type="VBoxContainer" parent="Panel/MarginContainer/VBoxContainer/hbox_main/vbox_content/step_2/HBoxContainer/VBoxContainer"]
+[node name="spinbox_tolerance_factor" type="VBoxContainer" parent="Panel/MarginContainer/VBoxContainer/step_2/VBoxContainer"]
 custom_minimum_size = Vector2(150, 0)
 layout_mode = 2
 size_flags_horizontal = 3
 tooltip_text = "If the texture isn't PixelPerfect, the fill texture can have some white fragments, changes this value to lower the tolerance."
 alignment = 2
 
-[node name="Label" type="Label" parent="Panel/MarginContainer/VBoxContainer/hbox_main/vbox_content/step_2/HBoxContainer/VBoxContainer/spinbox_tolerance_factor"]
+[node name="Label" type="Label" parent="Panel/MarginContainer/VBoxContainer/step_2/VBoxContainer/spinbox_tolerance_factor"]
 layout_mode = 2
 theme_override_font_sizes/font_size = 13
 text = "Alpha Tolerance Factor"
 
-[node name="spinbox_white_tolerance" type="SpinBox" parent="Panel/MarginContainer/VBoxContainer/hbox_main/vbox_content/step_2/HBoxContainer/VBoxContainer/spinbox_tolerance_factor"]
+[node name="spinbox_white_tolerance" type="SpinBox" parent="Panel/MarginContainer/VBoxContainer/step_2/VBoxContainer/spinbox_tolerance_factor"]
 unique_name_in_owner = true
 layout_mode = 2
 mouse_default_cursor_shape = 2
@@ -249,22 +237,22 @@ max_value = 1.0
 step = 0.01
 value = 0.1
 
-[node name="HSeparator" type="HSeparator" parent="Panel/MarginContainer/VBoxContainer/hbox_main/vbox_content/step_2/HBoxContainer/VBoxContainer"]
+[node name="HSeparator" type="HSeparator" parent="Panel/MarginContainer/VBoxContainer/step_2/VBoxContainer"]
 layout_mode = 2
 
-[node name="btn_recreate_texture" type="Button" parent="Panel/MarginContainer/VBoxContainer/hbox_main/vbox_content/step_2/HBoxContainer/VBoxContainer"]
+[node name="btn_recreate_texture" type="Button" parent="Panel/MarginContainer/VBoxContainer/step_2/VBoxContainer"]
 layout_mode = 2
 text = "Recreate Texture"
 
-[node name="lbl_tile_size" type="Label" parent="Panel/MarginContainer/VBoxContainer/hbox_main/vbox_content/step_2/HBoxContainer/VBoxContainer"]
+[node name="lbl_tile_size" type="Label" parent="Panel/MarginContainer/VBoxContainer/step_2/VBoxContainer"]
 unique_name_in_owner = true
 layout_mode = 2
 
-[node name="lbl_tile_set_size" type="Label" parent="Panel/MarginContainer/VBoxContainer/hbox_main/vbox_content/step_2/HBoxContainer/VBoxContainer"]
+[node name="lbl_tile_set_size" type="Label" parent="Panel/MarginContainer/VBoxContainer/step_2/VBoxContainer"]
 unique_name_in_owner = true
 layout_mode = 2
 
-[node name="btn_export" type="Button" parent="Panel/MarginContainer/VBoxContainer/hbox_main/vbox_content/step_2/HBoxContainer/VBoxContainer"]
+[node name="btn_export" type="Button" parent="Panel/MarginContainer/VBoxContainer/step_2/VBoxContainer"]
 unique_name_in_owner = true
 layout_mode = 2
 size_flags_vertical = 10
@@ -324,8 +312,8 @@ unique_name_in_owner = true
 visible = false
 layout_mode = 1
 
-[connection signal="pressed" from="Panel/MarginContainer/VBoxContainer/hbox_main/vbox_content/step_2/HBoxContainer/VBoxContainer/btn_recreate_texture" to="ui_controller" method="_on_btn_recreate_texture_pressed"]
-[connection signal="pressed" from="Panel/MarginContainer/VBoxContainer/hbox_main/vbox_content/step_2/HBoxContainer/VBoxContainer/btn_export" to="Panel/MarginContainer/VBoxContainer/hbox_button_bar" method="_on_btn_export_pressed"]
+[connection signal="pressed" from="Panel/MarginContainer/VBoxContainer/step_2/VBoxContainer/btn_recreate_texture" to="ui_controller" method="_on_btn_recreate_texture_pressed"]
+[connection signal="pressed" from="Panel/MarginContainer/VBoxContainer/step_2/VBoxContainer/btn_export" to="Panel/MarginContainer/VBoxContainer/hbox_button_bar" method="_on_btn_export_pressed"]
 [connection signal="pressed" from="Panel/MarginContainer/VBoxContainer/hbox_button_bar/btn_new" to="Panel/MarginContainer/VBoxContainer/hbox_button_bar" method="_on_btn_new_pressed"]
 [connection signal="pressed" from="Panel/MarginContainer/VBoxContainer/hbox_button_bar/btn_close" to="Panel/MarginContainer/VBoxContainer/hbox_button_bar" method="_on_btn_close_pressed"]
 [connection signal="pressed" from="btn_close" to="Panel/MarginContainer/VBoxContainer/hbox_button_bar" method="_on_btn_close_pressed"]
