@@ -4,6 +4,12 @@ const TileType = EditorEnums.TileType;
 const FillMode = EditorEnums.FillMode;
 const ErrorType = EditorEnums.ErrorType;
 
+const TILE_SET_FACTOR := 4;
+const VALID_EXTENSIONS := [
+	"png",
+	"jpg",
+	"webp"
+];
 
 @onready var ui_controller: UIController = %ui_controller
 @onready var error_panel: ErrorPanel = %error_panel
@@ -39,19 +45,11 @@ var placement_dict := {
 	}
 };
 
-const TILE_SET_FACTOR := 4;
-const VALID_EXTENSIONS := [
-	"png",
-	"jpg",
-	"webp"
-];
-
 var regex_pattern;
 var texture_dict := {}; #[TileType]: Texture2D;
 var generated_texture: ImageTexture;
 var current_texture: Texture2D;
 var current_texture_type: TileType;
-
 var tile_size := 0;
 
 
@@ -65,7 +63,9 @@ func _ready() -> void:
 	regex_pattern = ".+\\.(%s)$" % pattern;
 
 
-func import_texture(path):
+#region texture generation and export
+
+func import_texture(path) -> void:
 	var img = Image.load_from_file(path);
 	if img.detect_alpha() == Image.AlphaMode.ALPHA_NONE:
 		img.convert(Image.FORMAT_RGBA8);
@@ -82,10 +82,10 @@ func import_texture(path):
 	
 	create_preview_texture();
 	
-	ui_controller.btn_export.disabled = texture_dict.size() < 1;
+	ui_controller.toggle_export_button(texture_dict.size() < 1);
 
 
-func create_preview_texture():
+func create_preview_texture() -> void:
 	var original := _get_current_texture() as ImageTexture;
 	
 	if original == null:
@@ -119,8 +119,9 @@ func create_preview_texture():
 	
 	var preview_texture := ImageTexture.create_from_image(preview_image);
 
-	ui_controller.texture_preview.texture = preview_texture;
+	ui_controller.set_preview_texture(preview_texture);
 	generated_texture = preview_texture;
+
 
 func _generate_border_tiles(preview_image: Image) -> Image:
 	for tile_type: TileType in texture_dict.keys():
@@ -163,7 +164,6 @@ func _generate_border_tiles(preview_image: Image) -> Image:
 	return preview_image;
 
 
-
 func _generate_fill_texture(fill_mode: FillMode , target_image: Image, source_image: Image) -> Image:
 	var max_size := tile_size * TILE_SET_FACTOR
 	
@@ -186,7 +186,7 @@ func _generate_fill_texture(fill_mode: FillMode , target_image: Image, source_im
 	return target_image;
 
 
-func export_texture(path: String):
+func export_texture(path: String) -> void:
 	var image := generated_texture.get_image();
 	if !_has_valid_extension(path):
 		image.save_png(path + ".png");
@@ -202,12 +202,31 @@ func export_texture(path: String):
 		_:
 			image.save_png(path);
 
+#endregion
+
+#region get/set properties
+
+func remove_tile_from_texture_dict(type: TileType) -> void:
+	texture_dict[type] = null;
+	texture_dict.erase(type);
+
+
+func get_texture_dict_count() -> int:
+	return texture_dict.size();
+
+
+func set_current_texture_type(type: TileType) -> void:
+	current_texture_type = type;
+
+#endregion
 
 #region helper
-func _get_current_texture():
+
+func _get_current_texture() -> ImageTexture:
 	return _get_texture(current_texture_type);
 
-func _get_texture(tile_type: TileType):
+
+func _get_texture(tile_type: TileType) -> ImageTexture:
 	return texture_dict.get(tile_type);
 
 
@@ -231,11 +250,12 @@ func _is_near_white(color: Color, tolerance: float) -> bool:
 		and color.a == 1.0
 
 
-func _check_textures():
+func _check_textures() -> void:
 	for key: TileType in texture_dict.keys():
 		var curr_texture := texture_dict[key] as ImageTexture;
 		if curr_texture != null:
-			tile_size = current_texture.get_width();
+			var img := texture_dict[key].get_image() as Image;
+			tile_size = img.get_width();
 			current_texture_type = key;
 			create_preview_texture();
 			return;
@@ -248,4 +268,5 @@ func _has_valid_extension(file_name: String) -> bool:
 		return false;
 		
 	return regex.search(file_name.to_lower()) != null;
+
 #endregion

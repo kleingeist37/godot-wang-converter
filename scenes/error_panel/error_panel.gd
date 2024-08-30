@@ -21,5 +21,4 @@ func set_message(msg_type: ErrorType):
 	
 
 func _on_btn_okay_pressed() -> void:
-	EditorSignals.new_texture.emit();
 	hide();
