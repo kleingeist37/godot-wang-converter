@@ -89,6 +89,7 @@ func init_progress_bar(type: ProgressBarType) -> void:
 	pb.min_value = 0;
 	pb.value = 0;
 
+
 func set_progress_bar_value(type: ProgressBarType, value: int) -> void:
 	_progress_bars[type].value = value;
 
@@ -166,7 +167,6 @@ func _init_form() -> void:
 	set_preview_texture(null);
 	wang_creator.reset_texture_data();
 	
-	for pb_type: int in ProgressBarType.values():
-		init_progress_bar(pb_type);
+	init_all_progress_bars();
 	
 #endregion

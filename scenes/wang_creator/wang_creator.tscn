@@ -178,7 +178,7 @@ layout_mode = 2
 [node name="lbl_info" type="Label" parent="Panel/MarginContainer/VBoxContainer/step_1"]
 layout_mode = 2
 text = "The border tiles must be white in the areas where the overlay fill texture shall be applied.
-The Preview Picture may look distorted on file sizes > 512 Pixels, the export is not affected by this."
+The Preview Picture may look distorted or blurry, but that's just the scaled texture. The export is not affected."
 horizontal_alignment = 1
 
 [node name="HSeparator2" type="HSeparator" parent="Panel/MarginContainer/VBoxContainer/step_1"]
@@ -202,17 +202,23 @@ text = "Loading ..."
 
 [node name="sc_preview_texture" type="ScrollContainer" parent="Panel/MarginContainer/VBoxContainer/step_2/vbox_texture"]
 unique_name_in_owner = true
-visible = false
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
 
-[node name="texture_preview" type="TextureRect" parent="Panel/MarginContainer/VBoxContainer/step_2/vbox_texture/sc_preview_texture"]
-unique_name_in_owner = true
+[node name="VBoxContainer" type="VBoxContainer" parent="Panel/MarginContainer/VBoxContainer/step_2/vbox_texture/sc_preview_texture"]
+custom_minimum_size = Vector2(400, 400)
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
-stretch_mode = 3
+
+[node name="texture_preview" type="TextureRect" parent="Panel/MarginContainer/VBoxContainer/step_2/vbox_texture/sc_preview_texture/VBoxContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 3
+expand_mode = 2
+stretch_mode = 4
 
 [node name="VSeparator" type="VSeparator" parent="Panel/MarginContainer/VBoxContainer/step_2"]
 layout_mode = 2

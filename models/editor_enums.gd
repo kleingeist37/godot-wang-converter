@@ -21,6 +21,7 @@ enum ErrorType {
 	DIFFER_SIZES_AMONG_FILES
 }
 
+
 enum ProgressBarType {
 	UNDERLAY,
 	BORDER,
