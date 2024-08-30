@@ -1,4 +1,4 @@
-[gd_scene load_steps=13 format=3 uid="uid://dwfe11p01aelk"]
+[gd_scene load_steps=14 format=3 uid="uid://dwfe11p01aelk"]
 
 [ext_resource type="Theme" uid="uid://dq8swrgnskgqc" path="res://theme/ui_default_theme.tres" id="1_6f5oy"]
 [ext_resource type="Script" path="res://scenes/wang_creator/wang_creator.gd" id="2_yfe83"]
@@ -12,6 +12,9 @@
 [ext_resource type="Texture2D" uid="uid://4p4ojmpbq1ww" path="res://sprites/icon_fill.png" id="8_s02kh"]
 [ext_resource type="Texture2D" uid="uid://dajr1f3mtxruj" path="res://sprites/icon_underlay_fill.png" id="10_m5i2y"]
 [ext_resource type="PackedScene" uid="uid://domowdth78has" path="res://scenes/error_panel/error_panel.tscn" id="11_0mu7d"]
+
+[sub_resource type="LabelSettings" id="LabelSettings_whog5"]
+font_size = 9
 
 [node name="wang_creator" type="Control"]
 layout_mode = 3
@@ -267,6 +270,11 @@ layout_mode = 2
 custom_minimum_size = Vector2(0, 50)
 layout_mode = 2
 script = ExtResource("3_g0mty")
+
+[node name="lbl_publish_info" type="Label" parent="Panel/MarginContainer/VBoxContainer/hbox_button_bar"]
+layout_mode = 2
+text = "Copyright © 2024 kleingeist37@awiWorks under MIT License"
+label_settings = SubResource("LabelSettings_whog5")
 
 [node name="btn_new" type="Button" parent="Panel/MarginContainer/VBoxContainer/hbox_button_bar"]
 custom_minimum_size = Vector2(150, 0)
