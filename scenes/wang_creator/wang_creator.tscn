@@ -1,6 +1,5 @@
-[gd_scene load_steps=14 format=3 uid="uid://dwfe11p01aelk"]
+[gd_scene load_steps=15 format=3 uid="uid://dwfe11p01aelk"]
 
-[ext_resource type="Theme" uid="uid://dq8swrgnskgqc" path="res://theme/ui_default_theme.tres" id="1_6f5oy"]
 [ext_resource type="Script" path="res://scenes/wang_creator/wang_creator.gd" id="2_yfe83"]
 [ext_resource type="Script" path="res://scenes/wang_creator/ui_controller.gd" id="3_6yelo"]
 [ext_resource type="Script" path="res://scenes/wang_creator/hbox_button_handler.gd" id="3_g0mty"]
@@ -13,6 +12,15 @@
 [ext_resource type="Texture2D" uid="uid://dajr1f3mtxruj" path="res://sprites/icon_underlay_fill.png" id="10_m5i2y"]
 [ext_resource type="PackedScene" uid="uid://domowdth78has" path="res://scenes/error_panel/error_panel.tscn" id="11_0mu7d"]
 
+[sub_resource type="Theme" id="Theme_npucb"]
+MarginContainer/constants/margin_bottom = 8
+MarginContainer/constants/margin_left = 8
+MarginContainer/constants/margin_right = 8
+MarginContainer/constants/margin_top = 8
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_kx2mt"]
+bg_color = Color(0.154876, 0.154876, 0.154876, 1)
+
 [sub_resource type="LabelSettings" id="LabelSettings_whog5"]
 font_size = 9
 
@@ -23,7 +31,7 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
-theme = ExtResource("1_6f5oy")
+theme = SubResource("Theme_npucb")
 script = ExtResource("2_yfe83")
 
 [node name="ui_controller" type="Control" parent="."]
@@ -40,7 +48,7 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
-theme = ExtResource("1_6f5oy")
+theme_override_styles/panel = SubResource("StyleBoxFlat_kx2mt")
 
 [node name="MarginContainer" type="MarginContainer" parent="Panel"]
 layout_mode = 1
