@@ -176,9 +176,10 @@ func _generate_border_tiles(preview_image: Image) -> Image:
 						var mixed_pixel := _mix_colors(base_pixel, source_pixel);
 						preview_image.set_pixel(x,y, mixed_pixel);
 		
-		step += step_size;
-		ui_controller.set_progress_bar_value(ProgessBarType.BORDER, step);
-		await get_tree().process_frame
+			step += step_size;
+			ui_controller.set_progress_bar_value(ProgessBarType.BORDER, step);
+			await get_tree().process_frame
+	
 	
 	ui_controller.set_progress_bar_value(ProgessBarType.BORDER, 100);
 	return preview_image;
@@ -212,9 +213,8 @@ func _generate_fill_texture(fill_mode: FillMode , target_image: Image, source_im
 		ui_controller.set_progress_bar_value(pb_type, floori((step / max_size) * 100))
 		
 		if step % update_frequency == 0:
-			await get_tree().process_frame
-
-
+			await get_tree().process_frame;
+	
 	return target_image;
 
 
