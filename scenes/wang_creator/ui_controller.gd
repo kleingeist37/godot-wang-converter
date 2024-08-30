@@ -26,17 +26,11 @@ var orig_icons := {
 @onready var spinbox_white_tolerance: SpinBox = %spinbox_white_tolerance;
 
 
-
-
-
 var filter_extensions: PackedStringArray;
-
 var save_state := false; 
-
-
 var button_dict := {}; #[TileType]: TileTypeButton;
 
-# Called when the node enters the scene tree for the first time.
+
 func _ready() -> void:
 	button_dict[TileType.BORDER] = tile_type_button_border;
 	button_dict[TileType.INNER_CORNER] = tile_type_button_inner_corner;
@@ -49,20 +43,7 @@ func _ready() -> void:
 	EditorSignals.new_texture.connect(_on_new_texture);
 	EditorSignals.show_texture_file_dialog.connect(_on_show_texture_file_dialog);
 	EditorSignals.remove_texture.connect(_on_remove_texture);
-	
-	#var filter : String;
-	#for valid_extension: String in wangVALID_EXTENSIONS:
-		#filter += "*.%s ;" % valid_extension;
-		##filter_extensions.append("*.%s ; %s Images" % [valid_extension, valid_extension.to_upper()]);
-	#
-	##file_dialog.filters.append(filter);
-	#var pattern = "";
-	#for i in VALID_EXTENSIONS.size():
-		#pattern += VALID_EXTENSIONS[i]
-		#if i < VALID_EXTENSIONS.size() - 1:
-			#pattern += "|";
-	#
-	#regex_pattern = ".+\\.(%s)$" % pattern;
+
 
 func set_tile_size_label(text: String):
 	lbl_tile_size.text = text;
@@ -118,7 +99,7 @@ func _init_form() -> void:
 	btn_export.disabled = true;
 	for key in orig_icons.keys():
 		button_dict[key].texture_normal = orig_icons[key];
-		
+	
 	texture_preview.texture = null;
 	wang_creator.texture_dict.clear();
 	wang_creator.generated_texture = null;
