@@ -53,7 +53,7 @@ var current_texture: Texture2D;
 var current_texture_type: TileType;
 
 var tile_size := 0;
-var max_size := tile_size * TILE_SET_FACTOR;
+
 
 func _ready() -> void:
 	var pattern = "";
@@ -102,27 +102,21 @@ func create_preview_texture():
 		tile_size = original.get_width();
 
 		
-	if tile_size != 0 and original.get_width() != tile_size:
+	if tile_size != 0 and original.get_width() != tile_size \
+	or tile_size != 0 and original.get_height() != tile_size:
 		error_panel.set_message(ErrorType.DIFFER_SIZES_AMONG_FILES);
 		error_panel.show();
-		return;
-		
-	if tile_size != 0 and original.get_height() != tile_size:
-		error_panel.set_message(ErrorType.DIFFER_SIZES_AMONG_FILES);
-		error_panel.show();
-		return;
-	
+		return;	
 	
 	var preview_image := Image.create(tile_size * TILE_SET_FACTOR, tile_size * TILE_SET_FACTOR, false, Image.FORMAT_RGBA8);
-	if texture_dict.has(TileType.UNDERLAY_FILL) \
-	and texture_dict[TileType.UNDERLAY_FILL] != null:
+	if !!texture_dict.get(TileType.UNDERLAY_FILL):
 		preview_image = _generate_fill_texture(FillMode.UNDERLAY, preview_image, texture_dict[TileType.UNDERLAY_FILL].get_image());
 
 	preview_image = _generate_border_tiles(preview_image);
 	
-	if texture_dict.has(TileType.OVERLAY_FILL) \
-	and texture_dict[TileType.OVERLAY_FILL] != null:
+	if !!texture_dict.get(TileType.OVERLAY_FILL):
 		preview_image = _generate_fill_texture(FillMode.OVERLAY, preview_image, texture_dict[TileType.OVERLAY_FILL].get_image());
+	
 	var preview_texture := ImageTexture.create_from_image(preview_image);
 
 	ui_controller.texture_preview.texture = preview_texture;
@@ -171,7 +165,7 @@ func _generate_border_tiles(preview_image: Image) -> Image:
 
 
 func _generate_fill_texture(fill_mode: FillMode , target_image: Image, source_image: Image) -> Image:
-	
+	var max_size := tile_size * TILE_SET_FACTOR
 	
 	for y in max_size:
 		for x in max_size:
@@ -214,8 +208,7 @@ func _get_current_texture():
 	return _get_texture(current_texture_type);
 
 func _get_texture(tile_type: TileType):
-	if texture_dict.has(tile_type):
-		return texture_dict[tile_type];
+	return texture_dict.get(tile_type);
 
 
 func _mix_colors(base_color: Color, overlay_color: Color) -> Color:
