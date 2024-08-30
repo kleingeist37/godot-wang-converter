@@ -105,6 +105,7 @@ func _on_file_dialog_file_selected(path: String) -> void:
 func _on_remove_texture(texture_type: TileType):
 	button_dict[texture_type].texture_normal = orig_icons[texture_type];
 	wang_creator.texture_dict[texture_type] = null;
+	wang_creator.texture_dict.erase(texture_type);
 	wang_creator.create_preview_texture();
 #endregion
 

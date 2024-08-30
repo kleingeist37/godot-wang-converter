@@ -53,6 +53,7 @@ var current_texture: Texture2D;
 var current_texture_type: TileType;
 
 var tile_size := 0;
+var max_size := tile_size * TILE_SET_FACTOR;
 
 func _ready() -> void:
 	var pattern = "";
@@ -114,13 +115,13 @@ func create_preview_texture():
 	
 	var preview_image := Image.create(tile_size * TILE_SET_FACTOR, tile_size * TILE_SET_FACTOR, false, Image.FORMAT_RGBA8);
 	if texture_dict.has(TileType.UNDERLAY_FILL) \
-	&& texture_dict[TileType.UNDERLAY_FILL] != null:
+	and texture_dict[TileType.UNDERLAY_FILL] != null:
 		preview_image = _generate_fill_texture(FillMode.UNDERLAY, preview_image, texture_dict[TileType.UNDERLAY_FILL].get_image());
 
 	preview_image = _generate_border_tiles(preview_image);
 	
 	if texture_dict.has(TileType.OVERLAY_FILL) \
-	&& texture_dict[TileType.OVERLAY_FILL] != null:
+	and texture_dict[TileType.OVERLAY_FILL] != null:
 		preview_image = _generate_fill_texture(FillMode.OVERLAY, preview_image, texture_dict[TileType.OVERLAY_FILL].get_image());
 	var preview_texture := ImageTexture.create_from_image(preview_image);
 
@@ -141,16 +142,17 @@ func _generate_border_tiles(preview_image: Image) -> Image:
 			match(rotations):
 				0:
 					pass;
+					
 				1:
 					rotated_image.rotate_90(CLOCKWISE);
-
+					
 				2: 
 					rotated_image.rotate_90(CLOCKWISE);
 					rotated_image.rotate_90(CLOCKWISE);
-
+					
 				3:
 					rotated_image.rotate_90(COUNTERCLOCKWISE);
-				
+			
 			var start_pos_x := tile_pos.x * tile_size;
 			var max_range_x := start_pos_x + tile_size;
 			
@@ -163,14 +165,13 @@ func _generate_border_tiles(preview_image: Image) -> Image:
 						var base_pixel := preview_image.get_pixel(x, y);
 						var mixed_pixel := _mix_colors(base_pixel, source_pixel);
 						preview_image.set_pixel(x,y, mixed_pixel);
-
-			
+	
 	return preview_image;
 
 
 
 func _generate_fill_texture(fill_mode: FillMode , target_image: Image, source_image: Image) -> Image:
-	var max_size := tile_size * TILE_SET_FACTOR;
+	
 	
 	for y in max_size:
 		for x in max_size:
@@ -225,12 +226,16 @@ func _mix_colors(base_color: Color, overlay_color: Color) -> Color:
 	
 	if final_alpha > 0:
 		final_color /= final_alpha;
-		
+	
 	final_color.a = final_alpha;
 	return final_color;
 
+
 func _is_near_white(color: Color, tolerance: float) -> bool:
-	return abs(color.r - 1.0) <= tolerance and abs(color.g - 1.0) <= tolerance and abs(color.b - 1.0) <= tolerance and color.a == 1.0
+	return abs(color.r - 1.0) <= tolerance  \
+		and abs(color.g - 1.0) <= tolerance \
+		and abs(color.b - 1.0) <= tolerance \
+		and color.a == 1.0
 
 
 func _check_textures():
