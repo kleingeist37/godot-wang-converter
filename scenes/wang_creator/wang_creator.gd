@@ -3,7 +3,7 @@ class_name WangCreator extends Control
 const TileType = EditorEnums.TileType;
 const FillMode = EditorEnums.FillMode;
 const ErrorType = EditorEnums.ErrorType;
-
+const ProgessBarType = EditorEnums.ProgressBarType;
 const TILE_SET_FACTOR := 4;
 const VALID_EXTENSIONS := [
 	"png",
@@ -82,6 +82,7 @@ func import_texture(path) -> void:
 	
 	create_preview_texture();
 	
+	ui_controller.toggle_preview_texture(true);
 	ui_controller.toggle_export_button(texture_dict.size() < 1);
 
 
@@ -99,31 +100,45 @@ func create_preview_texture() -> void:
 		return;
 	
 	if tile_size == 0:
-		tile_size = original.get_width();
+		set_tile_size(original.get_width());
 
 		
 	if tile_size != 0 and original.get_width() != tile_size \
 	or tile_size != 0 and original.get_height() != tile_size:
 		error_panel.set_message(ErrorType.DIFFER_SIZES_AMONG_FILES);
 		error_panel.show();
-		return;	
+		return;
+	
+	ui_controller.init_all_progress_bars();
 	
 	var preview_image := Image.create(tile_size * TILE_SET_FACTOR, tile_size * TILE_SET_FACTOR, false, Image.FORMAT_RGBA8);
 	if !!texture_dict.get(TileType.UNDERLAY_FILL):
-		preview_image = _generate_fill_texture(FillMode.UNDERLAY, preview_image, texture_dict[TileType.UNDERLAY_FILL].get_image());
+		preview_image = await _generate_fill_texture(FillMode.UNDERLAY, preview_image, texture_dict[TileType.UNDERLAY_FILL].get_image());
+	else:
+		ui_controller.set_progress_bar_value(ProgessBarType.UNDERLAY, 100);
+	
 
-	preview_image = _generate_border_tiles(preview_image);
+		
+	preview_image = await _generate_border_tiles(preview_image);
 	
 	if !!texture_dict.get(TileType.OVERLAY_FILL):
-		preview_image = _generate_fill_texture(FillMode.OVERLAY, preview_image, texture_dict[TileType.OVERLAY_FILL].get_image());
-	
+		preview_image = await _generate_fill_texture(FillMode.OVERLAY, preview_image, texture_dict[TileType.OVERLAY_FILL].get_image());
+	else:
+		ui_controller.set_progress_bar_value(ProgessBarType.OVERLAY, 100);
+
+		
 	var preview_texture := ImageTexture.create_from_image(preview_image);
 
 	ui_controller.set_preview_texture(preview_texture);
-	generated_texture = preview_texture;
+	set_generated_texture(preview_texture);
+	ui_controller.toggle_preview_texture(false);
 
 
 func _generate_border_tiles(preview_image: Image) -> Image:
+	var step := 0;
+	var step_size := floori(texture_dict.size() / 100);
+	ui_controller.init_progress_bar(ProgessBarType.BORDER);
+	
 	for tile_type: TileType in texture_dict.keys():
 		var texture := _get_texture(tile_type) as ImageTexture;
 		if texture == null:
@@ -160,12 +175,22 @@ func _generate_border_tiles(preview_image: Image) -> Image:
 						var base_pixel := preview_image.get_pixel(x, y);
 						var mixed_pixel := _mix_colors(base_pixel, source_pixel);
 						preview_image.set_pixel(x,y, mixed_pixel);
+		
+		step += step_size;
+		ui_controller.set_progress_bar_value(ProgessBarType.BORDER, step);
+		await get_tree().process_frame
 	
+	ui_controller.set_progress_bar_value(ProgessBarType.BORDER, 100);
 	return preview_image;
 
 
 func _generate_fill_texture(fill_mode: FillMode , target_image: Image, source_image: Image) -> Image:
 	var max_size := tile_size * TILE_SET_FACTOR
+	
+	var step:= 0;
+	var update_frequency := floori(max_size / 50);  
+	var pb_type := ProgessBarType.UNDERLAY if fill_mode == FillMode.UNDERLAY else ProgessBarType.OVERLAY;
+	ui_controller.init_progress_bar(pb_type);
 	
 	for y in max_size:
 		for x in max_size:
@@ -182,6 +207,13 @@ func _generate_fill_texture(fill_mode: FillMode , target_image: Image, source_im
 					if _is_near_white(target_color, ui_controller.spinbox_white_tolerance.value):
 						var mixed_pixel := _mix_colors(target_color, source_pixel);
 						target_image.set_pixel(x,y, mixed_pixel);
+		step += 1;
+		
+		ui_controller.set_progress_bar_value(pb_type, floori((step / max_size) * 100))
+		
+		if step % update_frequency == 0:
+			await get_tree().process_frame
+
 
 	return target_image;
 
@@ -217,6 +249,20 @@ func get_texture_dict_count() -> int:
 
 func set_current_texture_type(type: TileType) -> void:
 	current_texture_type = type;
+
+
+func set_tile_size(value: int) -> void:
+	tile_size = value;
+
+
+func set_generated_texture(texture: Texture2D) -> void:
+	generated_texture = texture;
+
+
+func reset_texture_data():
+	generated_texture = null;
+	tile_size = 0;
+	texture_dict.clear();
 
 #endregion
 

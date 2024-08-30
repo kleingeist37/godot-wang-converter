@@ -1,6 +1,7 @@
 class_name UIController extends Control
 
 const TileType = EditorEnums.TileType;
+const ProgressBarType = EditorEnums.ProgressBarType;
 
 @onready var wang_creator: WangCreator = $"..";
 @onready var file_dialog: FileDialog = %file_dialog;
@@ -17,6 +18,14 @@ const TileType = EditorEnums.TileType;
 @onready var spinbox_white_tolerance: SpinBox = %spinbox_white_tolerance;
 @onready var error_panel: ErrorPanel = %error_panel;
 
+@onready var progress_bar_underlay: ProgressBar = %progress_bar_underlay;
+@onready var progress_bar_border: ProgressBar = %progress_bar_border;
+@onready var progress_bar_overlay: ProgressBar = %progress_bar_overlay;
+
+@onready var sc_preview_texture: ScrollContainer = %sc_preview_texture
+@onready var lbl_loading: Label = %lbl_loading
+
+
 var orig_icons := {
 	TileType.BORDER: preload("res://sprites/icon_border.png") as Texture2D,
 	TileType.INNER_CORNER: preload("res://sprites/icon_inner_corner.png") as Texture2D,
@@ -29,7 +38,7 @@ var orig_icons := {
 var filter_extensions: PackedStringArray;
 var save_state := false; 
 var button_dict := {}; #[TileType]: TileTypeButton;
-
+var _progress_bars := {};
 
 func _ready() -> void:
 	button_dict[TileType.BORDER] = tile_type_button_border;
@@ -39,11 +48,16 @@ func _ready() -> void:
 	button_dict[TileType.UNDERLAY_FILL] = tile_type_button_underlay_fill;
 	button_dict[TileType.EDGE_CONNECTOR] = tile_type_button_edge_connector;
 	
+	_progress_bars[ProgressBarType.UNDERLAY] = progress_bar_underlay;
+	_progress_bars[ProgressBarType.OVERLAY] = progress_bar_overlay;
+	_progress_bars[ProgressBarType.BORDER] = progress_bar_border;
+	
 	EditorSignals.export_texture.connect(_on_export_texture);
 	EditorSignals.new_texture.connect(_on_new_texture);
 	EditorSignals.show_texture_file_dialog.connect(_on_show_texture_file_dialog);
 	EditorSignals.remove_texture.connect(_on_remove_texture);
 	error_panel.hidden.connect(_on_error_panel_hidden);
+	
 	_init_form();
 
 
@@ -63,15 +77,42 @@ func toggle_export_button(disabled: bool) -> void:
 
 func set_preview_texture(texture: Texture2D) -> void:
 	texture_preview.texture = texture;
+
+
+func init_progress_bar(type: ProgressBarType) -> void:
+	var pb := _progress_bars.get(type) as ProgressBar;
+	
+	if pb == null:
+		return;
+	
+	pb.max_value = 100;
+	pb.min_value = 0;
+	pb.value = 0;
+
+func set_progress_bar_value(type: ProgressBarType, value: int) -> void:
+	_progress_bars[type].value = value;
+
+
+func init_all_progress_bars() -> void:
+	for pb_key in _progress_bars.keys():
+		init_progress_bar(pb_key);
+
+
+func toggle_preview_texture(show_loading_text: bool) -> void:
+	lbl_loading.visible = show_loading_text;
+	sc_preview_texture.visible = !show_loading_text;
 	
 #endregion
 
 #region event listener
+
 func _on_new_texture() -> void:
 	_init_form();
 
+
 func _on_error_panel_hidden() -> void:
 	EditorSignals.new_texture.emit();
+
 
 func _on_btn_recreate_texture_pressed() -> void:
 	wang_creator.create_preview_texture();
@@ -114,7 +155,6 @@ func _on_remove_texture(texture_type: TileType) -> void:
 
 
 #region helper
-
 func _init_form() -> void:
 	set_tile_size_label("");
 	set_tile_set_size_label("");
@@ -124,8 +164,9 @@ func _init_form() -> void:
 		button_dict[key].texture_normal = orig_icons[key];
 	
 	set_preview_texture(null);
-	wang_creator.texture_dict.clear();
-	wang_creator.generated_texture = null;
-	wang_creator.tile_size = 0;
+	wang_creator.reset_texture_data();
+	
+	for pb_type: int in ProgressBarType.values():
+		init_progress_bar(pb_type);
 	
 #endregion

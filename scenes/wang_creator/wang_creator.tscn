@@ -178,7 +178,7 @@ layout_mode = 2
 [node name="lbl_info" type="Label" parent="Panel/MarginContainer/VBoxContainer/step_1"]
 layout_mode = 2
 text = "The border tiles must be white in the areas where the overlay fill texture shall be applied.
-Tiles Sizes bigger than 256 x 256 work, but also need more computing time"
+The Preview Picture may look distorted on file sizes > 512 Pixels, the export is not affected by this."
 horizontal_alignment = 1
 
 [node name="HSeparator2" type="HSeparator" parent="Panel/MarginContainer/VBoxContainer/step_1"]
@@ -188,21 +188,31 @@ layout_mode = 2
 layout_mode = 2
 size_flags_vertical = 3
 
-[node name="ScrollContainer" type="ScrollContainer" parent="Panel/MarginContainer/VBoxContainer/step_2"]
+[node name="vbox_texture" type="VBoxContainer" parent="Panel/MarginContainer/VBoxContainer/step_2"]
 layout_mode = 2
 size_flags_horizontal = 3
 
-[node name="VBoxContainer2" type="VBoxContainer" parent="Panel/MarginContainer/VBoxContainer/step_2/ScrollContainer"]
-layout_mode = 2
-size_flags_horizontal = 3
-size_flags_vertical = 3
-
-[node name="texture_preview" type="TextureRect" parent="Panel/MarginContainer/VBoxContainer/step_2/ScrollContainer/VBoxContainer2"]
+[node name="lbl_loading" type="Label" parent="Panel/MarginContainer/VBoxContainer/step_2/vbox_texture"]
 unique_name_in_owner = true
+visible = false
 layout_mode = 2
 size_flags_horizontal = 4
+size_flags_vertical = 6
+text = "Loading ..."
+
+[node name="sc_preview_texture" type="ScrollContainer" parent="Panel/MarginContainer/VBoxContainer/step_2/vbox_texture"]
+unique_name_in_owner = true
+visible = false
+layout_mode = 2
+size_flags_horizontal = 3
 size_flags_vertical = 3
-stretch_mode = 2
+
+[node name="texture_preview" type="TextureRect" parent="Panel/MarginContainer/VBoxContainer/step_2/vbox_texture/sc_preview_texture"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+stretch_mode = 3
 
 [node name="VSeparator" type="VSeparator" parent="Panel/MarginContainer/VBoxContainer/step_2"]
 layout_mode = 2
@@ -252,10 +262,62 @@ layout_mode = 2
 unique_name_in_owner = true
 layout_mode = 2
 
+[node name="progress_bar" type="VBoxContainer" parent="Panel/MarginContainer/VBoxContainer/step_2/VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 10
+
+[node name="HBoxContainer" type="HBoxContainer" parent="Panel/MarginContainer/VBoxContainer/step_2/VBoxContainer/progress_bar"]
+layout_mode = 2
+
+[node name="underlay" type="VBoxContainer" parent="Panel/MarginContainer/VBoxContainer/step_2/VBoxContainer/progress_bar/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="label_underlay" type="Label" parent="Panel/MarginContainer/VBoxContainer/step_2/VBoxContainer/progress_bar/HBoxContainer/underlay"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 13
+text = "Underlay Texture"
+
+[node name="progress_bar_underlay" type="ProgressBar" parent="Panel/MarginContainer/VBoxContainer/step_2/VBoxContainer/progress_bar/HBoxContainer/underlay"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="border" type="VBoxContainer" parent="Panel/MarginContainer/VBoxContainer/step_2/VBoxContainer/progress_bar/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="lbl_border" type="Label" parent="Panel/MarginContainer/VBoxContainer/step_2/VBoxContainer/progress_bar/HBoxContainer/border"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 13
+text = "Border Textures"
+
+[node name="progress_bar_border" type="ProgressBar" parent="Panel/MarginContainer/VBoxContainer/step_2/VBoxContainer/progress_bar/HBoxContainer/border"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="overlay" type="VBoxContainer" parent="Panel/MarginContainer/VBoxContainer/step_2/VBoxContainer/progress_bar/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="lbl_overlay" type="Label" parent="Panel/MarginContainer/VBoxContainer/step_2/VBoxContainer/progress_bar/HBoxContainer/overlay"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 13
+text = "Overlay Texture"
+
+[node name="progress_bar_overlay" type="ProgressBar" parent="Panel/MarginContainer/VBoxContainer/step_2/VBoxContainer/progress_bar/HBoxContainer/overlay"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="HSeparator2" type="HSeparator" parent="Panel/MarginContainer/VBoxContainer/step_2/VBoxContainer"]
+layout_mode = 2
+
 [node name="btn_export" type="Button" parent="Panel/MarginContainer/VBoxContainer/step_2/VBoxContainer"]
 unique_name_in_owner = true
 layout_mode = 2
-size_flags_vertical = 10
+size_flags_vertical = 8
 mouse_default_cursor_shape = 2
 text = "3. Export the Texture"
 

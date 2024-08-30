@@ -20,3 +20,10 @@ enum ErrorType {
 	SIZE_NOT_EQUAL,
 	DIFFER_SIZES_AMONG_FILES
 }
+
+enum ProgressBarType {
+	UNDERLAY,
+	BORDER,
+	OVERLAY,
+	TOTAL
+}
