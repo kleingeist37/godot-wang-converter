@@ -117,8 +117,6 @@ func create_preview_texture() -> void:
 	else:
 		ui_controller.set_progress_bar_value(ProgessBarType.UNDERLAY, 100);
 	
-
-		
 	preview_image = await _generate_border_tiles(preview_image);
 	
 	if !!texture_dict.get(TileType.OVERLAY_FILL):
