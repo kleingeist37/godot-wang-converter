@@ -11,6 +11,7 @@ const ProgressBarType = EditorEnums.ProgressBarType;
 @onready var tile_type_button_border: TextureButton = %tile_type_button_border;
 @onready var tile_type_button_overlay_fill: TextureButton = %tile_type_button_overlay_fill;
 @onready var tile_type_button_underlay_fill: TextureButton = %tile_type_button_underlay_fill;
+@onready var tile_type_button_full: TextureButton = %tile_type_button_full;
 @onready var lbl_tile_size: Label = %lbl_tile_size;
 @onready var lbl_tile_set_size: Label = %lbl_tile_set_size;
 @onready var btn_export: Button = %btn_export;
@@ -32,7 +33,8 @@ var orig_icons := {
 	TileType.OUTER_CORNER: preload("res://sprites/icon_outer_corner.png") as Texture2D,
 	TileType.OVERLAY_FILL: preload("res://sprites/icon_fill.png") as Texture2D,
 	TileType.EDGE_CONNECTOR: preload("res://sprites/icon_edge_connector.png") as Texture2D,
-	TileType.UNDERLAY_FILL: preload("res://sprites/icon_underlay_fill.png") as Texture2D
+	TileType.UNDERLAY_FILL: preload("res://sprites/icon_underlay_fill.png") as Texture2D,
+	TileType.FULL: null
 };
 
 var filter_extensions: PackedStringArray;
@@ -47,7 +49,8 @@ const SLOT_ORDER := [
 	TileType.INNER_CORNER,
 	TileType.BORDER,
 	TileType.OVERLAY_FILL,
-	TileType.UNDERLAY_FILL
+	TileType.UNDERLAY_FILL,
+	TileType.FULL
 ];
 
 func _ready() -> void:
@@ -57,6 +60,7 @@ func _ready() -> void:
 	button_dict[TileType.OVERLAY_FILL] = tile_type_button_overlay_fill;
 	button_dict[TileType.UNDERLAY_FILL] = tile_type_button_underlay_fill;
 	button_dict[TileType.EDGE_CONNECTOR] = tile_type_button_edge_connector;
+	button_dict[TileType.FULL] = tile_type_button_full;
 	
 	_progress_bars[ProgressBarType.UNDERLAY] = progress_bar_underlay;
 	_progress_bars[ProgressBarType.OVERLAY] = progress_bar_overlay;
@@ -67,9 +71,6 @@ func _ready() -> void:
 	EditorSignals.show_texture_file_dialog.connect(_on_show_texture_file_dialog);
 	EditorSignals.remove_texture.connect(_on_remove_texture);
 	error_panel.hidden.connect(_on_error_panel_hidden);
-	
-	file_dialog.file_selected.connect(_on_file_dialog_file_selected)
-	file_dialog.files_selected.connect(_on_file_dialog_files_selected)
 	
 	_init_form();
 

@@ -1,8 +1,8 @@
 [gd_scene load_steps=15 format=3 uid="uid://dwfe11p01aelk"]
 
-[ext_resource type="Script" path="res://scenes/wang_creator/wang_creator.gd" id="2_yfe83"]
-[ext_resource type="Script" path="res://scenes/wang_creator/ui_controller.gd" id="3_6yelo"]
-[ext_resource type="Script" path="res://scenes/wang_creator/hbox_button_handler.gd" id="3_g0mty"]
+[ext_resource type="Script" uid="uid://dhb6lfj22678r" path="res://scenes/wang_creator/wang_creator.gd" id="2_yfe83"]
+[ext_resource type="Script" uid="uid://kbxckdgra67y" path="res://scenes/wang_creator/ui_controller.gd" id="3_6yelo"]
+[ext_resource type="Script" uid="uid://e73lr82u2gmi" path="res://scenes/wang_creator/hbox_button_handler.gd" id="3_g0mty"]
 [ext_resource type="PackedScene" uid="uid://ct3wf6xd60idd" path="res://scenes/tile_type_button/tile_type_button.tscn" id="3_k5oar"]
 [ext_resource type="Texture2D" uid="uid://dkahxhgpvip48" path="res://sprites/icon_outer_corner.png" id="4_2ese2"]
 [ext_resource type="Texture2D" uid="uid://c3wr01h8uk6oq" path="res://sprites/icon_edge_connector.png" id="5_qr07o"]
@@ -170,6 +170,44 @@ tile_type = 5
 [node name="Label" type="Label" parent="Panel/MarginContainer/VBoxContainer/step_1/HBoxContainer/btn_underlay_fill"]
 layout_mode = 2
 text = "Underlay Fill"
+horizontal_alignment = 1
+
+[node name="btn_full" type="VBoxContainer" parent="Panel/MarginContainer/VBoxContainer/step_1/HBoxContainer"]
+layout_mode = 2
+
+[node name="Control" type="Control" parent="Panel/MarginContainer/VBoxContainer/step_1/HBoxContainer/btn_full"]
+custom_minimum_size = Vector2(128, 128)
+layout_mode = 2
+
+[node name="preview_border" type="NinePatchRect" parent="Panel/MarginContainer/VBoxContainer/step_1/HBoxContainer/btn_full/Control"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("10_m5i2y")
+region_rect = Rect2(0, 0, 128, 128)
+patch_margin_left = 7
+patch_margin_top = 7
+patch_margin_right = 7
+patch_margin_bottom = 7
+
+[node name="tile_type_button_full" parent="Panel/MarginContainer/VBoxContainer/step_1/HBoxContainer/btn_full/Control" instance=ExtResource("3_k5oar")]
+unique_name_in_owner = true
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_default_cursor_shape = 2
+tile_type = 6
+
+[node name="Label" type="Label" parent="Panel/MarginContainer/VBoxContainer/step_1/HBoxContainer/btn_full"]
+layout_mode = 2
+text = "Full Texture
+(If you want to manually adjust the clip shapes and fill them afterwards)"
 horizontal_alignment = 1
 
 [node name="spacing_container" type="MarginContainer" parent="Panel/MarginContainer/VBoxContainer/step_1"]
@@ -386,3 +424,4 @@ layout_mode = 1
 [connection signal="pressed" from="Panel/MarginContainer/VBoxContainer/hbox_button_bar/btn_close" to="Panel/MarginContainer/VBoxContainer/hbox_button_bar" method="_on_btn_close_pressed"]
 [connection signal="pressed" from="btn_close" to="Panel/MarginContainer/VBoxContainer/hbox_button_bar" method="_on_btn_close_pressed"]
 [connection signal="file_selected" from="file_dialog" to="ui_controller" method="_on_file_dialog_file_selected"]
+[connection signal="files_selected" from="file_dialog" to="ui_controller" method="_on_file_dialog_files_selected"]

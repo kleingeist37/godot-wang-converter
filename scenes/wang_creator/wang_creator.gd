@@ -80,6 +80,9 @@ func import_texture(path) -> void:
 	texture_dict[current_texture_type] = texture;
 	ui_controller.button_dict[current_texture_type].texture_normal = texture;
 	
+	if current_texture_type != TileType.FULL and tile_size == 0:
+		set_tile_size(texture.get_width());
+	
 	create_preview_texture();
 	
 	ui_controller.toggle_preview_texture(true);
@@ -94,33 +97,54 @@ func create_preview_texture() -> void:
 		_check_textures();
 		return;
 	
-	if original.get_width() != original.get_height():
-		error_panel.set_message(ErrorType.SIZE_NOT_EQUAL);
-		error_panel.show();
-		return;
-	
-	if tile_size == 0:
-		set_tile_size(original.get_width());
-
+	if current_texture_type != TileType.FULL:
+		if original.get_width() != original.get_height():
+			error_panel.set_message(ErrorType.SIZE_NOT_EQUAL);
+			error_panel.show();
+			return;
 		
-	if tile_size != 0 and original.get_width() != tile_size \
-	or tile_size != 0 and original.get_height() != tile_size:
-		error_panel.set_message(ErrorType.DIFFER_SIZES_AMONG_FILES);
-		error_panel.show();
-		return;
+		if tile_size == 0:
+			set_tile_size(original.get_width());
+			
+		if tile_size != 0 and original.get_width() != tile_size \
+		or tile_size != 0 and original.get_height() != tile_size:
+			error_panel.set_message(ErrorType.DIFFER_SIZES_AMONG_FILES);
+			error_panel.show();
+			return;
 	
 	ui_controller.init_all_progress_bars();
 	
-	var preview_image := Image.create(tile_size * TILE_SET_FACTOR, tile_size * TILE_SET_FACTOR, false, Image.FORMAT_RGBA8);
+	var preview_image: Image;
+	var target_size: int;
+
+
+	if !!texture_dict.get(TileType.FULL):
+		var full_texture = texture_dict[TileType.FULL].get_image();
+		target_size = max(full_texture.get_width(), full_texture.get_height());
+		preview_image = full_texture.duplicate();
+	else:
+		target_size = tile_size * TILE_SET_FACTOR;
+		preview_image = Image.create(target_size, target_size, false, Image.FORMAT_RGBA8);
+	
 	if !!texture_dict.get(TileType.UNDERLAY_FILL):
-		preview_image = await _generate_fill_texture(FillMode.UNDERLAY, preview_image, texture_dict[TileType.UNDERLAY_FILL].get_image());
+		preview_image = await _generate_fill_texture(
+			FillMode.UNDERLAY, 
+			preview_image, 
+			texture_dict[TileType.UNDERLAY_FILL].get_image(),
+			target_size
+		);
 	else:
 		ui_controller.set_progress_bar_value(ProgessBarType.UNDERLAY, 100);
-	
+
 	preview_image = await _generate_border_tiles(preview_image);
-	
+
 	if !!texture_dict.get(TileType.OVERLAY_FILL):
-		preview_image = await _generate_fill_texture(FillMode.OVERLAY, preview_image, texture_dict[TileType.OVERLAY_FILL].get_image());
+		preview_image = await _generate_fill_texture(
+			FillMode.OVERLAY, 
+			preview_image, 
+			texture_dict[TileType.OVERLAY_FILL].get_image(),
+			target_size
+		);
 	else:
 		ui_controller.set_progress_bar_value(ProgessBarType.OVERLAY, 100);
 
@@ -136,6 +160,21 @@ func _generate_border_tiles(preview_image: Image) -> Image:
 	var step := 0;
 	var step_size := floori(texture_dict.size() / 100);
 	ui_controller.init_progress_bar(ProgessBarType.BORDER);
+
+	if !!texture_dict.get(TileType.FULL) and !!texture_dict.get(TileType.UNDERLAY_FILL):
+		var full_texture = texture_dict[TileType.FULL].get_image();
+		for x in range(0, full_texture.get_width()):
+			for y in range(0, full_texture.get_height()):
+				var source_pixel = full_texture.get_pixel(x, y);
+				if source_pixel.a != 0:
+					var base_pixel = preview_image.get_pixel(x, y);
+					var mixed_pixel := _mix_colors(base_pixel, source_pixel);
+					preview_image.set_pixel(x, y, mixed_pixel);
+		ui_controller.set_progress_bar_value(ProgessBarType.BORDER, 100);
+		return preview_image;
+
+	if !!texture_dict.get(TileType.FULL) or current_texture_type == TileType.FULL:
+		return preview_image;
 	
 	for tile_type: TileType in texture_dict.keys():
 		var texture := _get_texture(tile_type) as ImageTexture;
@@ -183,18 +222,19 @@ func _generate_border_tiles(preview_image: Image) -> Image:
 	return preview_image;
 
 
-func _generate_fill_texture(fill_mode: FillMode , target_image: Image, source_image: Image) -> Image:
-	var max_size := tile_size * TILE_SET_FACTOR
+func _generate_fill_texture(fill_mode: FillMode, target_image: Image, source_image: Image, target_size: int = 0) -> Image:
+	var max_size := target_size if target_size > 0 else tile_size * TILE_SET_FACTOR;
 	
 	var step:= 0;
-	var update_frequency := floori(max_size / 50);  
+	var update_frequency := maxi(1, floori(max_size / 50));  
 	var pb_type := ProgessBarType.UNDERLAY if fill_mode == FillMode.UNDERLAY else ProgessBarType.OVERLAY;
 	ui_controller.init_progress_bar(pb_type);
 	
 	for y in max_size:
 		for x in max_size:
-			var source_pos_x := x % tile_size as int;
-			var source_pos_y := y % tile_size as int;
+			var source_pos_x := x % source_image.get_width() as int;
+			var source_pos_y := y % source_image.get_height() as int;
+			
 			var target_color := target_image.get_pixel(x, y);
 			var source_pixel := source_image.get_pixel(source_pos_x, source_pos_y);
 			
