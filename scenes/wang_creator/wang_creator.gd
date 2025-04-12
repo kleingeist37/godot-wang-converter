@@ -94,7 +94,7 @@ func update_result() -> void:
 			white_image.fill(Color.WHITE);
 			texture_dict[TileType.OVERLAY_FILL] = ImageTexture.create_from_image(white_image);
 	create_preview_texture();
-	
+
 	ui_controller.toggle_preview_texture(true);
 	ui_controller.toggle_export_button(texture_dict.size() < 1);
 
@@ -289,6 +289,17 @@ func export_texture(path: String) -> void:
 func remove_tile_from_texture_dict(type: TileType) -> void:
 	texture_dict[type] = null;
 	texture_dict.erase(type);
+
+	if get_texture_dict_count() > 1:
+		return;
+	if get_texture_dict_count() == 1:
+		if ui_controller.overlay_tile_loaded:
+			return;
+		if !texture_dict.get(TileType.FULL):
+			return;
+
+	set_tile_size(0);
+
 
 
 func get_texture_dict_count() -> int:
