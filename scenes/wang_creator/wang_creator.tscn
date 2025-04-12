@@ -157,6 +157,15 @@ layout_mode = 2
 text = "Overlay Fill"
 horizontal_alignment = 1
 
+[node name="fill_white" type="CheckBox" parent="Panel/MarginContainer/VBoxContainer/step_1/HBoxContainer/btn_overlay_fill"]
+unique_name_in_owner = true
+layout_mode = 2
+theme_override_font_sizes/font_size = 14
+button_pressed = true
+text = "fill white
+if not provided"
+clip_text = true
+
 [node name="btn_underlay_fill" type="VBoxContainer" parent="Panel/MarginContainer/VBoxContainer/step_1/HBoxContainer"]
 layout_mode = 2
 
@@ -418,6 +427,7 @@ unique_name_in_owner = true
 visible = false
 layout_mode = 1
 
+[connection signal="toggled" from="Panel/MarginContainer/VBoxContainer/step_1/HBoxContainer/btn_overlay_fill/fill_white" to="ui_controller" method="_on_fill_white_toggled"]
 [connection signal="pressed" from="Panel/MarginContainer/VBoxContainer/step_2/VBoxContainer/btn_recreate_texture" to="ui_controller" method="_on_btn_recreate_texture_pressed"]
 [connection signal="pressed" from="Panel/MarginContainer/VBoxContainer/step_2/VBoxContainer/btn_export" to="Panel/MarginContainer/VBoxContainer/hbox_button_bar" method="_on_btn_export_pressed"]
 [connection signal="pressed" from="Panel/MarginContainer/VBoxContainer/hbox_button_bar/btn_new" to="Panel/MarginContainer/VBoxContainer/hbox_button_bar" method="_on_btn_new_pressed"]

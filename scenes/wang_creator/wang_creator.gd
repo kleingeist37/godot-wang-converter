@@ -13,6 +13,7 @@ const VALID_EXTENSIONS := [
 
 @onready var ui_controller: UIController = %ui_controller
 @onready var error_panel: ErrorPanel = %error_panel
+@onready var fill_white: CheckBox = %fill_white
 
 var placement_dict := {
 	TileType.BORDER: {
@@ -79,10 +80,19 @@ func import_texture(path) -> void:
 
 	texture_dict[current_texture_type] = texture;
 	ui_controller.button_dict[current_texture_type].texture_normal = texture;
-	
+
 	if current_texture_type != TileType.FULL and tile_size == 0:
 		set_tile_size(texture.get_width());
-	
+		
+	update_result();
+
+
+func update_result() -> void:
+	if tile_size != 0:
+		if !texture_dict.get(TileType.OVERLAY_FILL) and fill_white.button_pressed:
+			var white_image := Image.create(tile_size, tile_size, false, Image.FORMAT_RGBA8);
+			white_image.fill(Color.WHITE);
+			texture_dict[TileType.OVERLAY_FILL] = ImageTexture.create_from_image(white_image);
 	create_preview_texture();
 	
 	ui_controller.toggle_preview_texture(true);

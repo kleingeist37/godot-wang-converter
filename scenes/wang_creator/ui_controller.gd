@@ -18,6 +18,7 @@ const ProgressBarType = EditorEnums.ProgressBarType;
 @onready var texture_preview: TextureRect = %texture_preview;
 @onready var spinbox_white_tolerance: SpinBox = %spinbox_white_tolerance;
 @onready var error_panel: ErrorPanel = %error_panel;
+@onready var fill_white: CheckBox = %fill_white
 
 @onready var progress_bar_underlay: ProgressBar = %progress_bar_underlay;
 @onready var progress_bar_border: ProgressBar = %progress_bar_border;
@@ -42,6 +43,7 @@ var save_state := false;
 var current_button_type: TileType;
 var button_dict := {}; #[TileType]: TileTypeButton;
 var _progress_bars := {};
+var overlay_tile_loaded := false;
 
 const SLOT_ORDER := [
 	TileType.OUTER_CORNER,
@@ -172,15 +174,29 @@ func _on_file_dialog_files_selected(paths: PackedStringArray) -> void:
 
 	for i in range(min(paths.size(), available_slots.size())):
 		var slot_type: TileType = available_slots[i];
+		if slot_type == TileType.OVERLAY_FILL:
+			overlay_tile_loaded = true;
 		wang_creator.set_current_texture_type(slot_type);
 		wang_creator.import_texture(paths[i]);
 
 
 func _on_remove_texture(texture_type: TileType) -> void:
+	if texture_type == TileType.OVERLAY_FILL:
+		overlay_tile_loaded = false;
 	button_dict[texture_type].texture_normal = orig_icons[texture_type];
 	wang_creator.remove_tile_from_texture_dict(texture_type);
 	wang_creator.create_preview_texture();
 	toggle_export_button(wang_creator.get_texture_dict_count() < 1);
+
+
+func _on_fill_white_toggled(toggled_on: bool) -> void:
+	if overlay_tile_loaded:
+		return;
+
+	if toggled_on:
+		wang_creator.update_result();
+	else:
+		_on_remove_texture(TileType.OVERLAY_FILL);
 	
 #endregion
 
