@@ -37,8 +37,18 @@ var orig_icons := {
 
 var filter_extensions: PackedStringArray;
 var save_state := false; 
+var current_button_type: TileType;
 var button_dict := {}; #[TileType]: TileTypeButton;
 var _progress_bars := {};
+
+const SLOT_ORDER := [
+	TileType.OUTER_CORNER,
+	TileType.EDGE_CONNECTOR,
+	TileType.INNER_CORNER,
+	TileType.BORDER,
+	TileType.OVERLAY_FILL,
+	TileType.UNDERLAY_FILL
+];
 
 func _ready() -> void:
 	button_dict[TileType.BORDER] = tile_type_button_border;
@@ -57,6 +67,9 @@ func _ready() -> void:
 	EditorSignals.show_texture_file_dialog.connect(_on_show_texture_file_dialog);
 	EditorSignals.remove_texture.connect(_on_remove_texture);
 	error_panel.hidden.connect(_on_error_panel_hidden);
+	
+	file_dialog.file_selected.connect(_on_file_dialog_file_selected)
+	file_dialog.files_selected.connect(_on_file_dialog_files_selected)
 	
 	_init_form();
 
@@ -121,9 +134,9 @@ func _on_btn_recreate_texture_pressed() -> void:
 
 func _show_file_dialog(save_mode: bool) -> void:
 	save_state = save_mode;
-	file_dialog.file_mode = FileDialog.FILE_MODE_SAVE_FILE if save_mode else FileDialog.FILE_MODE_OPEN_FILE;
-	file_dialog.title = "Save File" if save_mode else "Select File";
-	
+	file_dialog.file_mode = FileDialog.FILE_MODE_SAVE_FILE if save_mode else FileDialog.FILE_MODE_OPEN_FILES;
+	file_dialog.title = "Save File" if save_mode else "Select Files";
+
 	if save_mode:
 		file_dialog.current_file = "exported_tile_set.png";
 	
@@ -135,7 +148,7 @@ func _on_export_texture() -> void:
 	
 
 func _on_show_texture_file_dialog(texture_type: TileType) -> void:
-	wang_creator.set_current_texture_type(texture_type);
+	current_button_type = texture_type;
 	_show_file_dialog(false);
 
 
@@ -144,6 +157,22 @@ func _on_file_dialog_file_selected(path: String) -> void:
 		wang_creator.export_texture(path);
 	else:
 		wang_creator.import_texture(path);
+
+
+func _on_file_dialog_files_selected(paths: PackedStringArray) -> void:
+	if save_state:
+		return;
+
+	var current_index := SLOT_ORDER.find(current_button_type);
+	if current_index == -1:
+		return;
+
+	var available_slots := SLOT_ORDER.slice(current_index);
+
+	for i in range(min(paths.size(), available_slots.size())):
+		var slot_type: TileType = available_slots[i];
+		wang_creator.set_current_texture_type(slot_type);
+		wang_creator.import_texture(paths[i]);
 
 
 func _on_remove_texture(texture_type: TileType) -> void:
