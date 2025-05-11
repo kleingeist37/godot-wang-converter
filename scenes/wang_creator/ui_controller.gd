@@ -11,12 +11,14 @@ const ProgressBarType = EditorEnums.ProgressBarType;
 @onready var tile_type_button_border: TextureButton = %tile_type_button_border;
 @onready var tile_type_button_overlay_fill: TextureButton = %tile_type_button_overlay_fill;
 @onready var tile_type_button_underlay_fill: TextureButton = %tile_type_button_underlay_fill;
+@onready var tile_type_button_full: TextureButton = %tile_type_button_full;
 @onready var lbl_tile_size: Label = %lbl_tile_size;
 @onready var lbl_tile_set_size: Label = %lbl_tile_set_size;
 @onready var btn_export: Button = %btn_export;
 @onready var texture_preview: TextureRect = %texture_preview;
 @onready var spinbox_white_tolerance: SpinBox = %spinbox_white_tolerance;
 @onready var error_panel: ErrorPanel = %error_panel;
+@onready var fill_white: CheckBox = %fill_white
 
 @onready var progress_bar_underlay: ProgressBar = %progress_bar_underlay;
 @onready var progress_bar_border: ProgressBar = %progress_bar_border;
@@ -32,13 +34,26 @@ var orig_icons := {
 	TileType.OUTER_CORNER: preload("res://sprites/icon_outer_corner.png") as Texture2D,
 	TileType.OVERLAY_FILL: preload("res://sprites/icon_fill.png") as Texture2D,
 	TileType.EDGE_CONNECTOR: preload("res://sprites/icon_edge_connector.png") as Texture2D,
-	TileType.UNDERLAY_FILL: preload("res://sprites/icon_underlay_fill.png") as Texture2D
+	TileType.UNDERLAY_FILL: preload("res://sprites/icon_underlay_fill.png") as Texture2D,
+	TileType.FULL: null
 };
 
 var filter_extensions: PackedStringArray;
 var save_state := false; 
+var current_button_type: TileType;
 var button_dict := {}; #[TileType]: TileTypeButton;
 var _progress_bars := {};
+var overlay_tile_loaded := false;
+
+const SLOT_ORDER := [
+	TileType.OUTER_CORNER,
+	TileType.EDGE_CONNECTOR,
+	TileType.INNER_CORNER,
+	TileType.BORDER,
+	TileType.OVERLAY_FILL,
+	TileType.UNDERLAY_FILL,
+	TileType.FULL
+];
 
 func _ready() -> void:
 	button_dict[TileType.BORDER] = tile_type_button_border;
@@ -47,6 +62,7 @@ func _ready() -> void:
 	button_dict[TileType.OVERLAY_FILL] = tile_type_button_overlay_fill;
 	button_dict[TileType.UNDERLAY_FILL] = tile_type_button_underlay_fill;
 	button_dict[TileType.EDGE_CONNECTOR] = tile_type_button_edge_connector;
+	button_dict[TileType.FULL] = tile_type_button_full;
 	
 	_progress_bars[ProgressBarType.UNDERLAY] = progress_bar_underlay;
 	_progress_bars[ProgressBarType.OVERLAY] = progress_bar_overlay;
@@ -121,9 +137,9 @@ func _on_btn_recreate_texture_pressed() -> void:
 
 func _show_file_dialog(save_mode: bool) -> void:
 	save_state = save_mode;
-	file_dialog.file_mode = FileDialog.FILE_MODE_SAVE_FILE if save_mode else FileDialog.FILE_MODE_OPEN_FILE;
-	file_dialog.title = "Save File" if save_mode else "Select File";
-	
+	file_dialog.file_mode = FileDialog.FILE_MODE_SAVE_FILE if save_mode else FileDialog.FILE_MODE_OPEN_FILES;
+	file_dialog.title = "Save File" if save_mode else "Select Files";
+
 	if save_mode:
 		file_dialog.current_file = "exported_tile_set.png";
 	
@@ -135,7 +151,7 @@ func _on_export_texture() -> void:
 	
 
 func _on_show_texture_file_dialog(texture_type: TileType) -> void:
-	wang_creator.set_current_texture_type(texture_type);
+	current_button_type = texture_type;
 	_show_file_dialog(false);
 
 
@@ -146,11 +162,41 @@ func _on_file_dialog_file_selected(path: String) -> void:
 		wang_creator.import_texture(path);
 
 
+func _on_file_dialog_files_selected(paths: PackedStringArray) -> void:
+	if save_state:
+		return;
+
+	var current_index := SLOT_ORDER.find(current_button_type);
+	if current_index == -1:
+		return;
+
+	var available_slots := SLOT_ORDER.slice(current_index);
+
+	for i in range(min(paths.size(), available_slots.size())):
+		var slot_type: TileType = available_slots[i];
+		if slot_type == TileType.OVERLAY_FILL:
+			overlay_tile_loaded = true;
+		wang_creator.set_current_texture_type(slot_type);
+		wang_creator.import_texture(paths[i]);
+
+
 func _on_remove_texture(texture_type: TileType) -> void:
+	if texture_type == TileType.OVERLAY_FILL:
+		overlay_tile_loaded = false;
 	button_dict[texture_type].texture_normal = orig_icons[texture_type];
 	wang_creator.remove_tile_from_texture_dict(texture_type);
 	wang_creator.create_preview_texture();
 	toggle_export_button(wang_creator.get_texture_dict_count() < 1);
+
+
+func _on_fill_white_toggled(toggled_on: bool) -> void:
+	if overlay_tile_loaded:
+		return;
+
+	if toggled_on:
+		wang_creator.update_result();
+	else:
+		_on_remove_texture(TileType.OVERLAY_FILL);
 	
 #endregion
 
